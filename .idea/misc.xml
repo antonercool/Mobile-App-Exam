@@ -4,6 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Mobile-App-Exam/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Mobile-App-Exam/app/src/main/res/layout/activity_main.xml" value="0.13020833333333334" />
+        <entry key="..\:/Projects/Mobile-App-Exam/app/src/main/res/layout/activity_master_navigator.xml" value="0.25" />
+        <entry key="..\:/Projects/Mobile-App-Exam/app/src/main/res/layout/flex_fragment.xml" value="0.25" />
+        <entry key="..\:/Projects/Mobile-App-Exam/app/src/main/res/layout/news_fragment.xml" value="0.2427536231884058" />
+        <entry key="..\:/Projects/Mobile-App-Exam/app/src/main/res/layout/profile_fragment.xml" value="0.2427536231884058" />
+        <entry key="..\:/Projects/Mobile-App-Exam/app/src/main/res/layout/question_fragment.xml" value="0.2427536231884058" />
+        <entry key="..\:/Projects/Mobile-App-Exam/app/src/main/res/menu/master_navigator.xml" value="0.24010416666666667" />
+        <entry key="..\:/Projects/Mobile-App-Exam/app/src/main/res/menu/master_navigator_menu.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>
