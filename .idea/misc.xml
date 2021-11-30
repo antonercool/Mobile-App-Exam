@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Mobile-App-Exam/app/src/main/res/drawable/profile_icon.xml" value="0.22135416666666666" />
+        <entry key="..\:/Mobile-App-Exam/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
         <entry key="..\:/Mobile-App-Exam/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Mobile-App-Exam/app/src/main/res/layout/profile_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Mobile-App-Exam/app/src/main/res/layout/activity_main.xml" value="0.13020833333333334" />
         <entry key="..\:/Projects/Mobile-App-Exam/app/src/main/res/layout/activity_master_navigator.xml" value="0.25" />
         <entry key="..\:/Projects/Mobile-App-Exam/app/src/main/res/layout/flex_fragment.xml" value="0.25" />

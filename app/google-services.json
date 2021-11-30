@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "199553822758",
+    "project_id": "sousvide-entusiaster",
+    "storage_bucket": "sousvide-entusiaster.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:199553822758:android:38ba601d289f074b3db6e7",
+        "android_client_info": {
+          "package_name": "dk.au.mad21fall.assignment.sousvideentusiaster"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "199553822758-86eth9ilb6cfujs7lud65ocgs5db5952.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMEUyiuDiMc8axJ64Izu0HZAoGn-DO8Eo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "199553822758-86eth9ilb6cfujs7lud65ocgs5db5952.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
