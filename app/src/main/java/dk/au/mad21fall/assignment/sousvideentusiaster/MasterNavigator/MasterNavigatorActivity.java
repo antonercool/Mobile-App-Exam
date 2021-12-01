@@ -13,9 +13,10 @@ import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.Fragments.
 import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.Fragments.News;
 import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.Fragments.Profile;
 import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.Fragments.Question;
+import dk.au.mad21fall.assignment.sousvideentusiaster.Post.PostFlex;
 import dk.au.mad21fall.assignment.sousvideentusiaster.R;
 
-public class MasterNavigatorActivity extends AppCompatActivity {
+public class MasterNavigatorActivity extends AppCompatActivity implements INavigator {
 
     BottomNavigationView menuNavigator;
 
@@ -70,4 +71,12 @@ public class MasterNavigatorActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+    @Override
+    public void onFlexPostClicked() {
+        Fragment postFlex = new PostFlex();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                postFlex).commitNow();
+    }
 }
