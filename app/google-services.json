@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "199553822758-sqqe1ooied0bvo1bkfeh4v1g7s7t93k6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dk.au.mad21fall.assignment.sousvideentusiaster",
+            "certificate_hash": "d59d0d73488046efa746ba2b1b2bd10b33b1734a"
+          }
+        },
+        {
           "client_id": "199553822758-86eth9ilb6cfujs7lud65ocgs5db5952.apps.googleusercontent.com",
           "client_type": 3
         }
