@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import dk.au.mad21fall.assignment.sousvideentusiaster.MainActivity;
 import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.MasterNavigatorActivity;
 import dk.au.mad21fall.assignment.sousvideentusiaster.R;
 
@@ -112,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Intent i = new Intent(getApplicationContext(), MasterNavigatorActivity.class);
+                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(i);
 
                         } else {
