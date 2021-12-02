@@ -6,4 +6,6 @@ public interface INavigator {
 
     void onHelpPostClicked();
     void onHelpPostCancelClicked();
+
+    void onDetailClicked();
 }

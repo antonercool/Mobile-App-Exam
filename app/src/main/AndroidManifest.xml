@@ -10,8 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SousVideEntusiaster" >
         <activity
-            android:name=".Post.FlexPost"
+            android:name=".Post.PostFlex"
             android:exported="false" />
+        <activity
+            android:name=".DetailView.DetailFlex"
+            android:exported="true" />
         <activity
             android:name=".PostFlex.PostFlex"
             android:exported="false" />

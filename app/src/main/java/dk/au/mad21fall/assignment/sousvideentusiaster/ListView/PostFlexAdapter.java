@@ -98,6 +98,8 @@ public class PostFlexAdapter extends RecyclerView.Adapter<PostFlexAdapter.PostVi
         public PostViewHolder(@NonNull View itemView, IPostItemClickedListener postItemClickedListener){
             super(itemView);
 
+            listener = postItemClickedListener;
+
             //get references from layout file
             userName = itemView.findViewById(R.id.list_item_usernameTxt);
             timePosted = itemView.findViewById(R.id.list_item_timePostedTxt);

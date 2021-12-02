@@ -25,7 +25,7 @@ import dk.au.mad21fall.assignment.sousvideentusiaster.R;
 public class Flex extends Fragment implements PostFlexAdapter.IPostItemClickedListener {
 
     //How many items to generate
-    public static final int NUM_ITEMS = 50;
+    public static final int NUM_ITEMS = 10;
 
     //widgets
     private RecyclerView rcvList;
@@ -89,6 +89,6 @@ public class Flex extends Fragment implements PostFlexAdapter.IPostItemClickedLi
 
     @Override
     public void onPostClicked(int index) {
-        //todo
+        ((INavigator)getActivity()).onDetailClicked();
     }
 }

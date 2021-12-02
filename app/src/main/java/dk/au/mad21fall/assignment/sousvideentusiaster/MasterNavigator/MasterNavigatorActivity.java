@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import dk.au.mad21fall.assignment.sousvideentusiaster.DetailView.DetailFlex;
 import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.Fragments.Flex;
 import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.Fragments.News;
 import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.Fragments.Profile;
@@ -103,5 +105,12 @@ public class MasterNavigatorActivity extends AppCompatActivity implements INavig
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 Question).commitNow();
+    }
+
+    //TODO send ID of clicked item with itent
+    @Override
+    public void onDetailClicked() {
+        Intent i = new Intent(this, DetailFlex.class);
+        startActivity(i);
     }
 }
