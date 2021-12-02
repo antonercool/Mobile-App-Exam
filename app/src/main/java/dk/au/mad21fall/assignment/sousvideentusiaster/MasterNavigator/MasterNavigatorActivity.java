@@ -14,6 +14,7 @@ import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.Fragments.
 import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.Fragments.Profile;
 import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.Fragments.Question;
 import dk.au.mad21fall.assignment.sousvideentusiaster.Post.PostFlex;
+import dk.au.mad21fall.assignment.sousvideentusiaster.Post.PostHelp;
 import dk.au.mad21fall.assignment.sousvideentusiaster.R;
 
 public class MasterNavigatorActivity extends AppCompatActivity implements INavigator {
@@ -78,5 +79,29 @@ public class MasterNavigatorActivity extends AppCompatActivity implements INavig
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 postFlex).commitNow();
+    }
+
+    @Override
+    public void onFlexPostCancelClicked() {
+        Fragment Flex = new Flex();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                Flex).commitNow();
+    }
+
+    @Override
+    public void onHelpPostClicked() {
+        Fragment helpPost = new PostHelp();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                helpPost).commitNow();
+    }
+
+    @Override
+    public void onHelpPostCancelClicked() {
+        Fragment Question = new Question();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                Question).commitNow();
     }
 }

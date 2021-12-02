@@ -19,7 +19,7 @@ import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.INavigator
 import dk.au.mad21fall.assignment.sousvideentusiaster.R;
 import dk.au.mad21fall.assignment.sousvideentusiaster.Utils.Permissions;
 
-public class PostFlex extends Fragment  {
+public class PostHelp extends Fragment  {
 
     private static int RESULT_LOAD_IMAGE = 1;
     private static int GALLERY_ID = 999;
@@ -27,15 +27,15 @@ public class PostFlex extends Fragment  {
     private ImageView []imageArray = new ImageView[5];
 
     Button postBttn, cancelBttn, uploadBttn;
-    TextView title, content, temperature, time, uploadCounter, coockedMeat;
+    TextView title, content, uploadCounter, coockedMeat;
     ImageView img01, img02, img03, img04, img05;
 
-    public static PostFlex newInstance(){return new PostFlex();}
+    public static PostHelp newInstance(){return new PostHelp();}
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.post_flex_fragment, container, false);
+        View view = inflater.inflate(R.layout.post_help_fragment, container, false);
         InitUIElements(view);
 
 
@@ -61,20 +61,13 @@ public class PostFlex extends Fragment  {
                 if(TextUtils.isEmpty(coockedMeat.getText())){
                     coockedMeat.setError("Please type your cooked meat");
                 }
-                if(TextUtils.isEmpty(temperature.getText())){
-                    temperature.setError("Temperature missing!");
-                }
-                if(TextUtils.isEmpty(time.getText())){
-                    time.setError("Time cooked missing!");
-                }
-
             }
         });
 
         cancelBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((INavigator)getActivity()).onFlexPostCancelClicked();
+                ((INavigator)getActivity()).onHelpPostCancelClicked();
             }
         });
 
@@ -105,8 +98,6 @@ public class PostFlex extends Fragment  {
         title = view.findViewById(R.id.post_help_title);
         content = view.findViewById(R.id.post_help_content_text);
         coockedMeat = view.findViewById(R.id.post_help_meatCooked);
-        temperature = view.findViewById(R.id.post_flex_temperature);
-        time = view.findViewById(R.id.post_flex_time);
         uploadCounter = view.findViewById(R.id.post_flex_imageUploadCounter);
 
         img01 = view.findViewById(R.id.post_flex_image01);

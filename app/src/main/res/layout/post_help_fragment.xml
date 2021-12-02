@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:checked="true"
         android:clickable="false"
         android:text="Help"
         android:textColor="@android:color/darker_gray"
@@ -26,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:checked="true"
+        android:checked="false"
         android:clickable="false"
         android:text="Show and tell"
         android:textColor="@android:color/darker_gray"
@@ -201,76 +202,5 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider2" />
-
-    <androidx.gridlayout.widget.GridLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/post_help_cancelBttn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingTop="1dp"
-            android:paddingRight="3dp"
-            app:layout_column="1"
-            app:layout_row="0"
-            app:srcCompat="@drawable/ic_hourglass_start_solid"
-            tools:srcCompat="@drawable/ic_hourglass_start_solid" />
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="1dp"
-            android:paddingRight="3dp"
-            app:layout_column="4"
-            app:layout_row="0"
-            app:srcCompat="@drawable/ic_thermometer_three_quarters_solid"
-            tools:srcCompat="@drawable/ic_thermometer_three_quarters_solid" />
-
-        <EditText
-            android:id="@+id/post_flex_time"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_corner"
-            android:ems="10"
-            android:hint="5H 7m"
-            android:inputType="textPersonName"
-            android:padding="5dp"
-            android:textAlignment="center"
-            android:textSize="12sp"
-            app:layout_column="2"
-            app:layout_row="0" />
-
-        <EditText
-            android:id="@+id/post_flex_temperature"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_corner"
-            android:ems="10"
-            android:hint="55"
-            android:inputType="textPersonName"
-            android:padding="5dp"
-            android:textAlignment="center"
-            android:textSize="12sp"
-            app:layout_column="5"
-            app:layout_row="0" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=".."
-            android:textColor="#FAF9F9"
-            app:layout_column="3"
-            app:layout_row="0" />
-
-    </androidx.gridlayout.widget.GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

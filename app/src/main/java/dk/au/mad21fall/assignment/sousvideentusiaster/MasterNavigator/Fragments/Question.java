@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -18,6 +20,7 @@ import dk.au.mad21fall.assignment.sousvideentusiaster.ListView.FlexPost;
 import dk.au.mad21fall.assignment.sousvideentusiaster.ListView.HelpPost;
 import dk.au.mad21fall.assignment.sousvideentusiaster.ListView.PostFlexAdapter;
 import dk.au.mad21fall.assignment.sousvideentusiaster.ListView.PostHelpAdapter;
+import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.INavigator;
 import dk.au.mad21fall.assignment.sousvideentusiaster.R;
 
 public class Question extends Fragment implements PostHelpAdapter.IPostItemClickedListener {
@@ -47,6 +50,14 @@ public class Question extends Fragment implements PostHelpAdapter.IPostItemClick
         adapter = new PostHelpAdapter(this);
         rcvList = view.findViewById(R.id.recyclerView_help_fragment);
         rcvList.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        FloatingActionButton postNewHelp = view.findViewById(R.id.help_postBttn);
+        postNewHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((INavigator)getActivity()).onHelpPostClicked();
+            }
+        });
 
         rcvList.setAdapter(adapter);
 
