@@ -1,12 +1,16 @@
 package dk.au.mad21fall.assignment.sousvideentusiaster.Repository;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.storage.StorageReference;
@@ -27,8 +31,8 @@ public class SousVideRepository {
     private static FirebaseUtils firebaseUtils;
     private static SousVideRepository instance;
 
-    public static SousVideRepository getSousVideRepositoryInstance(){
-        if (instance == null){
+    public static SousVideRepository getSousVideRepositoryInstance() {
+        if (instance == null) {
             instance = new SousVideRepository();
             firebaseUtils = new FirebaseUtils();
         }
@@ -36,19 +40,45 @@ public class SousVideRepository {
         return instance;
     }
 
-    private SousVideRepository(){}
-
-
-    public Task<DocumentReference> postNewFlexPostAsync(FlexPostModel newPost){
-        final Boolean[] returnVal = new Boolean[1];
-
-        return firebaseUtils.getFlexPostsDocumentReference()
-                .collection("posts")
-                .add(newPost);
+    private SousVideRepository() {
     }
 
+
+    public void postNewFlexPostAsync(FlexPostModel newPost, String[] paths, int numOfImages, Activity activity) {
+        ArrayList<Uri> imageUrls = new ArrayList<>();
+        for (int i = 0; i < numOfImages; i++) {
+            uploadImageAsync(paths[i]).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        imageUrls.add(downloadUri);
+                        newPost.pictures.add(new PictureModel(downloadUri.toString()));
+
+                        if (imageUrls.size() == numOfImages) {
+
+                            firebaseUtils.getFlexPostsDocumentReference()
+                                    .collection("posts")
+                                    .add(newPost)
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                        @Override
+                                        public void onSuccess(DocumentReference documentReference) {
+                                            Toast.makeText(activity, "Post uploaded", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
+                    } else {
+                        // Handle failures
+                        // ...
+                    }
+                }
+            });
+        }
+    }
+
+
     // Refence https://firebase.google.com/docs/storage/android/upload-files
-    public Task<Uri> uploadImageAsync(String path){
+    public Task<Uri> uploadImageAsync(String path) {
         Bitmap bitmap = BitmapFactory.decodeFile(path);
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -57,7 +87,7 @@ public class SousVideRepository {
         bitmap.recycle();
 
         String uniqueID = UUID.randomUUID().toString();
-        StorageReference ref = firebaseUtils.getFirestoreCloudStorageInstance().getReference("/images/"+uniqueID);
+        StorageReference ref = firebaseUtils.getFirestoreCloudStorageInstance().getReference("/images/" + uniqueID);
         UploadTask uploadTask = ref.putBytes(byteArray);
 
 
@@ -77,7 +107,7 @@ public class SousVideRepository {
     }
 
 
-    public FlexPostModel getTestFlexObject(){
+    public FlexPostModel getTestFlexObject() {
 
         ArrayList<CommentModel> comments = new ArrayList<>();
 
@@ -100,13 +130,6 @@ public class SousVideRepository {
 
         return flexPost;
     }
-
-
-
-
-
-
-
 
 
 }

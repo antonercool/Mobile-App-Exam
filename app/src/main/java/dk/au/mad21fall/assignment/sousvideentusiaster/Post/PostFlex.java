@@ -131,40 +131,13 @@ public class PostFlex extends Fragment {
     }
 
 
-
     private View.OnClickListener postFlexButtonOnClickedListener = new View.OnClickListener() {
-
         @Override
         public void onClick(View view) {
             if (validateReqForPost()) {
                 FlexPostModel fromUiModel = generatePostableModelFromUi();
-                ArrayList<Uri> imageUrls = new ArrayList<>();
-                for (int i = 0; i < upload_counter; i++) {
-                    sousVideRepository.uploadImageAsync(imagePaths[i].toString()).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Uri> task) {
-                            if (task.isSuccessful()) {
-                                Uri downloadUri = task.getResult();
-                                imageUrls.add(downloadUri);
-                                fromUiModel.pictures.add(new PictureModel(downloadUri.toString()));
-
-                                if (imageUrls.size() == upload_counter) {
-
-                                    sousVideRepository.postNewFlexPostAsync(fromUiModel)
-                                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                                @Override
-                                                public void onSuccess(DocumentReference documentReference) {
-                                                    Toast.makeText(getActivity(), "Post uploaded", Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
-                                }
-                            } else {
-                                // Handle failures
-                                // ...
-                            }
-                        }
-                    });
-                }
+                sousVideRepository.postNewFlexPostAsync(fromUiModel, imagePaths, upload_counter, getActivity());
+                ((INavigator) getActivity()).onFlexPostCancelClicked();
             }
         }
     };
