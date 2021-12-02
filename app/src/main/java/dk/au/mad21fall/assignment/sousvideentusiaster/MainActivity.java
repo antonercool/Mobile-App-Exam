@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -72,7 +71,7 @@ public class MainActivity extends AppCompatActivity  {
         @Override
         public void onClick(View view) {
 
-            FlexPost newPost = getFlexObject();
+            FlexPost newPost = firestoreUtils.getFlexObject();
             CollectionReference bla = db.collection("posts");
 
 
@@ -151,33 +150,11 @@ public class MainActivity extends AppCompatActivity  {
             cursor.close();
             // String picturePath contains the path of selected Image
 
-            firestoreUtils.uploaderImages(picturePath);
+            Uri downloaduri = firestoreUtils.uploadImage(picturePath);
+            //text.setText(downloaduri.toString());
         }
     }
 
-
-    public FlexPost getFlexObject(){
-
-        ArrayList<Comment> comments = new ArrayList<>();
-
-        comments.add(new Comment(new Date(), "Sousvide bøf er nice", "peter", "https://someSite1"));
-        comments.add(new Comment(new Date(), "Nice one ", "anton", "https://someSite2"));
-
-        ArrayList<Picture> pictures = new ArrayList<>();
-        pictures.add(new Picture("https://someSite1"));
-        pictures.add(new Picture("https://someSite2"));
-
-        ArrayList<String> labels = new ArrayList();
-        labels.add("Ripeye");
-        labels.add("Potatos");
-
-        FlexPost flexPost = new FlexPost(new Date(), "Look at this",
-                              6, 54, labels,
-                              "Peter", 4, "https://someSite2",
-                                    pictures, comments,
-                                    comments.size());
-        return flexPost;
-    }
 
 
 }
