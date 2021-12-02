@@ -8,23 +8,23 @@ import java.util.Date;
 
 //simple data class (DTO)
 @IgnoreExtraProperties
-public class FlexPost {
+public class FlexPostModel {
 
     public Date created;
     public String description;
     public int hoursCooked;
     public int temp;
-    ArrayList<String> labels;
+    public ArrayList<String> labels;
     public String owner;
     public int stars;
     public String url;
 
-    public ArrayList<Picture> pictures;
-    public ArrayList<Comment> comments;
+    public ArrayList<PictureModel> pictures;
+    public ArrayList<CommentModel> comments;
 
-    public FlexPost(){};
+    public FlexPostModel(){};
 
-    public FlexPost(Date created, String description, int hoursCooked, int temp, ArrayList<String> labels, String owner, int stars, String url, ArrayList<Picture> pictures, ArrayList<Comment> comments, int numberOfComments) {
+    public FlexPostModel(Date created, String description, int hoursCooked, int temp, ArrayList<String> labels, String owner, int stars, String url, ArrayList<PictureModel> pictures, ArrayList<CommentModel> comments, int numberOfComments) {
         this.created = created;
         this.description = description;
         this.hoursCooked = hoursCooked;
