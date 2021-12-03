@@ -50,7 +50,12 @@ public class Flex extends Fragment implements PostFlexAdapter.IPostItemClickedLi
 
         sousVideRepository = SousVideRepository.getSousVideRepositoryInstance();
 
-        // FETCH EXAMLE
+        updateUi();
+
+        return view;
+    }
+
+    private void updateUi() {
         sousVideRepository.fetchNewestFlex(10)
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -67,8 +72,6 @@ public class Flex extends Fragment implements PostFlexAdapter.IPostItemClickedLi
                         adapter.updateFlexPostList(flexPostArrayList);
                     }
                 });
-
-        return view;
     }
 
 

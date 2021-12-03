@@ -55,11 +55,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/details_time"
         tools:text="Se denne lækre steg!" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/details_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -71,14 +71,14 @@
         tools:text="Lasse M." />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/details_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/details_username"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="1H 15 minutes ago." />
 
@@ -105,7 +105,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_details_flex_chip02" />
 
-    <ImageView
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/activity_details_flex_image"
         android:layout_width="0dp"
         android:layout_height="140dp"
@@ -115,7 +115,7 @@
         android:background="#DFDEDE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_details_flex_content" />
+        app:layout_constraintTop_toBottomOf="@+id/activity_details_flex_content"/>
 
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/gridLayout2"

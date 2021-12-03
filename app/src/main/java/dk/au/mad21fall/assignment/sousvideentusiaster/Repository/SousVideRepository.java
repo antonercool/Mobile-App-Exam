@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -29,6 +30,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.UUID;
 
@@ -117,6 +119,18 @@ public class SousVideRepository {
         return urlTask;
     }
 
+    public CollectionReference subscribeToComments(String ID){
+        return firebaseUtils.getFlexPostsDocumentReference()
+                .collection("posts")
+                .document(ID)
+                .collection("comments");
+    }
+
+    public DocumentReference subscribeToPost(String ID){
+        return firebaseUtils.getFlexPostsDocumentReference()
+                .collection("posts")
+                .document(ID);
+    }
 
     public Task<QuerySnapshot> getNewestBatchFromTime(Date fromTime, int limit) {
 
