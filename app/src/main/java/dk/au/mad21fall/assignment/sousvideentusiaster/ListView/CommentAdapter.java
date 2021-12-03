@@ -1,5 +1,6 @@
 package dk.au.mad21fall.assignment.sousvideentusiaster.ListView;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +10,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.CommentModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.R;
 
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
+
+    private Context context;
 
     //interface for handling when a Post item is clicked in various ways
     public interface ICommentItemClickedListener {
@@ -26,18 +33,21 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     private ICommentItemClickedListener listener;
 
     //data in the adapter
-    private ArrayList<Comment> commentList;
+    private ArrayList<CommentModel> commentList;
 
     //constructor
     public CommentAdapter(ICommentItemClickedListener listener){
         this.listener = listener;
     }
 
-    public void updateCommentList(ArrayList<Comment> lists){
+    public void updateCommentList(ArrayList<CommentModel> lists){
         commentList = lists;
         notifyDataSetChanged();
     }
 
+    public void addContext(Context context){
+        this.context = context;
+    }
 
     @NonNull
     @Override
@@ -50,8 +60,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
-        holder.userName.setText(commentList.get(position).publisher);
-        holder.comment.setText(commentList.get(position).comment);
+        holder.userName.setText(commentList.get(position).from);
+        holder.comment.setText(commentList.get(position).description);
+        Glide.with(context).load(commentList.get(position).url).into(holder.image_profile);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/hh:mm");
+        holder.commentDate.setText(simpleDateFormat.format(commentList.get(position).created));
+
 
     }
 
@@ -70,7 +85,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     public class CommentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         //viewHolder ui widget references
-        TextView userName, comment;
+        TextView userName, comment, commentDate;
         ImageView image_profile;
 
         //custom callback interface for user actions done to the view holder item
@@ -86,6 +101,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
             image_profile = itemView.findViewById(R.id.image_profile);
             userName = itemView.findViewById(R.id.username);
             comment = itemView.findViewById(R.id.comment);
+            commentDate = itemView.findViewById(R.id.commentCreated);
 
 
             //set click listener for whole list item

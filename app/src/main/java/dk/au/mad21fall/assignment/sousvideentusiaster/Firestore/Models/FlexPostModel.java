@@ -10,6 +10,7 @@ import java.util.Date;
 @IgnoreExtraProperties
 public class FlexPostModel {
 
+    public String title;
     public Date created;
     public String description;
     public int hoursCooked;
@@ -19,6 +20,8 @@ public class FlexPostModel {
     public int stars;
     public String url;
     public int numberOfComments;
+    @Exclude
+    public String ID;
 
     public ArrayList<PictureModel> pictures;
     public ArrayList<CommentModel> comments;
@@ -26,7 +29,7 @@ public class FlexPostModel {
 
     public FlexPostModel(){};
 
-    public FlexPostModel(Date created, String description, int hoursCooked, int temp, ArrayList<String> labels, String owner, int stars, String url, ArrayList<PictureModel> pictures, ArrayList<CommentModel> comments, int numberOfComments) {
+    public FlexPostModel(Date created, String description, int hoursCooked, int temp, ArrayList<String> labels, String owner, int stars, String url, ArrayList<PictureModel> pictures, ArrayList<CommentModel> comments, int numberOfComments, String title) {
         this.created = created;
         this.description = description;
         this.hoursCooked = hoursCooked;
@@ -38,6 +41,15 @@ public class FlexPostModel {
         this.pictures = pictures;
         this.comments = comments;
         this.numberOfComments = numberOfComments;
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Date getCreated() {

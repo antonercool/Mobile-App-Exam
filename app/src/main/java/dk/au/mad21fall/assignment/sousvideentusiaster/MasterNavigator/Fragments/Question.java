@@ -16,9 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Random;
 
-import dk.au.mad21fall.assignment.sousvideentusiaster.ListView.FlexPost;
 import dk.au.mad21fall.assignment.sousvideentusiaster.ListView.HelpPost;
-import dk.au.mad21fall.assignment.sousvideentusiaster.ListView.PostFlexAdapter;
 import dk.au.mad21fall.assignment.sousvideentusiaster.ListView.PostHelpAdapter;
 import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.INavigator;
 import dk.au.mad21fall.assignment.sousvideentusiaster.R;

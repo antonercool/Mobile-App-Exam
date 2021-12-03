@@ -243,11 +243,11 @@
 
         <EditText
             android:id="@+id/post_flex_time"
-            android:layout_width="60dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_corner"
             android:ems="10"
-            android:hint="5H 7m"
+            android:hint="5H"
             android:inputType="textPersonName"
             android:padding="5dp"
             android:textAlignment="center"

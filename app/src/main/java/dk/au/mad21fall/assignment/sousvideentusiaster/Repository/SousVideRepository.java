@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -26,6 +27,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
@@ -129,6 +131,57 @@ public class SousVideRepository {
         return fetchTask;
     }
 
+    public Task<QuerySnapshot> fetchNewestFlex(int limit) {
+
+        //asynchronously retrieve multiple documents
+        Task<QuerySnapshot> fetchTask =  firebaseUtils.getFlexPostsDocumentReference()
+                .collection("posts")
+                .orderBy("created", Query.Direction.ASCENDING)
+                .limit(limit)
+                .get();
+
+        return fetchTask;
+    }
+
+    public Task<DocumentSnapshot> fetchFlexPostByID(String ID) {
+
+        //asynchronously retrieve multiple documents
+        Task<DocumentSnapshot> fetchTask =  firebaseUtils.getFlexPostsDocumentReference()
+                .collection("posts")
+                .document(ID).get();
+
+        return fetchTask;
+    }
+
+    public Task<QuerySnapshot> fetchCommentsByPostID(String ID) {
+
+        //asynchronously retrieve multiple documents
+        Task<QuerySnapshot> fetchTask =  firebaseUtils.getFlexPostsDocumentReference()
+                .collection("posts")
+                .document(ID)
+                .collection("comments")
+                .get();
+
+        return fetchTask;
+    }
+
+    public Task<DocumentReference> postComment(String postID, CommentModel commentModel) {
+
+        //asynchronously retrieve multiple documents
+        Task<DocumentReference> commentUploadTask =  firebaseUtils.getFlexPostsDocumentReference()
+                .collection("posts")
+                .document(postID)
+                .collection("comments")
+                .add(commentModel);
+
+        firebaseUtils.getFlexPostsDocumentReference()
+                .collection("posts")
+                .document(postID)
+                .update("numberOfComments", FieldValue.increment(1));
+
+        return commentUploadTask;
+    }
+
 
     public FlexPostModel getTestFlexObject() {
 
@@ -149,7 +202,8 @@ public class SousVideRepository {
                 6, 54, labels,
                 "Peter", 4, "https://someSite2",
                 pictures, comments,
-                comments.size());
+                comments.size(),
+                "ANTON GLEMTE TITLE");
 
         return flexPost;
     }

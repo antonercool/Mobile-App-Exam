@@ -38,7 +38,7 @@
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:text="TextView"
                 android:textSize="12sp"
                 app:layout_constraintStart_toEndOf="@+id/item_flex_profile"
@@ -164,8 +164,8 @@
 
             <ImageView
                 android:id="@+id/item_flex_profile"
-                android:layout_width="31dp"
-                android:layout_height="31dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"

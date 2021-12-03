@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.chip.Chip
-        android:id="@+id/list_item_chip"
+        android:id="@+id/activity_details_flex_chip01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -27,11 +27,11 @@
         android:textColor="@color/GRAYER"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/list_item_chip2"
+        app:layout_constraintTop_toTopOf="@+id/activity_details_flex_chip02"
         tools:text="Mørbrad" />
 
     <com.google.android.material.chip.Chip
-        android:id="@+id/list_item_chip2"
+        android:id="@+id/activity_details_flex_chip02"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -39,7 +39,7 @@
         android:text="Ripeye"
         android:textColor="@color/GRAYER"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/list_item_chip"
+        app:layout_constraintStart_toEndOf="@+id/activity_details_flex_chip01"
         app:layout_constraintTop_toBottomOf="@+id/activity_details_flex_title"
         tools:text="Ripeye" />
 
@@ -83,7 +83,7 @@
         tools:text="1H 15 minutes ago." />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/activity_details_flex_content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -103,10 +103,10 @@
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list_item_chip2" />
+        app:layout_constraintTop_toBottomOf="@+id/activity_details_flex_chip02" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/activity_details_flex_image"
         android:layout_width="0dp"
         android:layout_height="140dp"
         android:layout_marginStart="8dp"
@@ -115,7 +115,7 @@
         android:background="#DFDEDE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
+        app:layout_constraintTop_toBottomOf="@+id/activity_details_flex_content" />
 
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/gridLayout2"
@@ -125,7 +125,7 @@
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6">
+        app:layout_constraintTop_toBottomOf="@+id/activity_details_flex_image">
 
         <ImageView
             android:id="@+id/imageView10"
@@ -164,7 +164,7 @@
             app:srcCompat="@drawable/ic_comment_alt_solid" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/activity_details_flex_numberOfComments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
@@ -176,7 +176,7 @@
             tools:text="3 Commnets." />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/activity_details_flex_hoursCooked"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
@@ -189,7 +189,7 @@
             tools:text="4H" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/activity_details_flex_temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"

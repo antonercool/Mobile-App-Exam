@@ -109,8 +109,9 @@ public class MasterNavigatorActivity extends AppCompatActivity implements INavig
 
     //TODO send ID of clicked item with itent
     @Override
-    public void onDetailClicked() {
+    public void onDetailClicked(String ID) {
         Intent i = new Intent(this, DetailFlex.class);
+        i.putExtra("ID", ID);
         startActivity(i);
     }
 }

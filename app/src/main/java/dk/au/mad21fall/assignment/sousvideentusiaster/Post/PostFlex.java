@@ -96,7 +96,8 @@ public class PostFlex extends Fragment {
                 Integer.parseInt(time.getText().toString()), Integer.parseInt(temperature.getText().toString()), labels,
                 username, stars, userPhotoUri.toString(),
                 pictures, comments,
-                comments.size());
+                comments.size(),
+                title.getText().toString());
 
 
         return flexPost;

@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,13 +18,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Random;
 
 import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.FlexPostModel;
-import dk.au.mad21fall.assignment.sousvideentusiaster.ListView.FlexPost;
 import dk.au.mad21fall.assignment.sousvideentusiaster.ListView.PostFlexAdapter;
 import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.INavigator;
 import dk.au.mad21fall.assignment.sousvideentusiaster.R;
@@ -43,7 +39,7 @@ public class Flex extends Fragment implements PostFlexAdapter.IPostItemClickedLi
     private SousVideRepository sousVideRepository;
 
     //data (should come from Firebase
-    private ArrayList<FlexPost> flexPostArrayList;
+    private ArrayList<FlexPostModel> flexPostArrayList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -53,26 +49,24 @@ public class Flex extends Fragment implements PostFlexAdapter.IPostItemClickedLi
         setupUIElements(view);
 
         sousVideRepository = SousVideRepository.getSousVideRepositoryInstance();
-        String currentDate =  "Fri Dec 03 10:12:32 GMT+01:00 2021";
-        Date fetchFrom = new Date();
 
         // FETCH EXAMLE
-        /*
-        sousVideRepository.getNewestBatchFromTime(fetchFrom, 3)
+        sousVideRepository.fetchNewestFlex(10)
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            ArrayList<FlexPostModel> fetchedModels = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                fetchedModels.add(document.toObject(FlexPostModel.class));
+                                FlexPostModel currentObject = document.toObject(FlexPostModel.class);
+                                currentObject.ID = document.getId();
+                                flexPostArrayList.add(currentObject);
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
+                        adapter.updateFlexPostList(flexPostArrayList);
                     }
                 });
-         */
 
         return view;
     }
@@ -81,6 +75,7 @@ public class Flex extends Fragment implements PostFlexAdapter.IPostItemClickedLi
     private void setupUIElements(View view){
         //set up recyclerview with adapter and layout manager
         adapter = new PostFlexAdapter(this);
+        adapter.addContext(getContext());
         rcvList = view.findViewById(R.id.recyclerView_help_fragment);
         rcvList.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -95,15 +90,14 @@ public class Flex extends Fragment implements PostFlexAdapter.IPostItemClickedLi
         rcvList.setAdapter(adapter);
 
         //create data and update adapter/recyclerview
-        createData();
-        adapter.updateFlexPostList(flexPostArrayList);
     }
 
+    /*
     private void createData() {
-        flexPostArrayList = new ArrayList<FlexPost>();
+        flexPostArrayList = new ArrayList<FlexPostModel>();
         Random r = new Random();
         for(int i = 0; i < NUM_ITEMS; i++){
-            flexPostArrayList.add(new FlexPost("Matias munkeskider " + i,
+            flexPostArrayList.add(new FlexPostModel("Matias munkeskider " + i,
                     i + " Minutes ago.",
                     "Mørbrad " + i,
                     "Svinekam " + i,
@@ -118,10 +112,10 @@ public class Flex extends Fragment implements PostFlexAdapter.IPostItemClickedLi
                     i
                     ));
         }
-    }
+    }*/
 
     @Override
-    public void onPostClicked(int index) {
-        ((INavigator)getActivity()).onDetailClicked();
+    public void onPostClicked(String ID) {
+        ((INavigator)getActivity()).onDetailClicked(ID);
     }
 }
