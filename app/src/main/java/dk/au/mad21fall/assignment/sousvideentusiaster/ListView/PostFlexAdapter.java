@@ -56,7 +56,7 @@ public class PostFlexAdapter extends RecyclerView.Adapter<PostFlexAdapter.PostVi
         holder.chipText01.setText(flexPostList.get(position).chipText01);
         holder.chipText02.setText(flexPostList.get(position).chipText02);
         holder.postedImage.setImageResource(R.drawable.flex_icon);
-        holder.profileImage.setImageResource(R.drawable.flex_icon);
+        //holder.profileImage.setImageResource(R.drawable.flex_icon);
         holder.postText.setText(flexPostList.get(position).postText);
         holder.numberOfComments.setText(String.valueOf(flexPostList.get(position).numberOfComments) + " Comment(s).");
         //holder.rating.setRating(String.valueOf(flexPostList.get(position).rating));
@@ -98,11 +98,13 @@ public class PostFlexAdapter extends RecyclerView.Adapter<PostFlexAdapter.PostVi
         public PostViewHolder(@NonNull View itemView, IPostItemClickedListener postItemClickedListener){
             super(itemView);
 
+            listener = postItemClickedListener;
+
             //get references from layout file
             userName = itemView.findViewById(R.id.list_item_usernameTxt);
             timePosted = itemView.findViewById(R.id.list_item_timePostedTxt);
             postedImage = itemView.findViewById(R.id.list_item_image);
-            profileImage = itemView.findViewById(R.id.list_item_profilePic);
+            profileImage = itemView.findViewById(R.id.item_flex_profile);
             chipText01 = itemView.findViewById(R.id.list_item_chip01);
             chipText02 = itemView.findViewById(R.id.list_item_chip02);
             postText = itemView.findViewById(R.id.list_item_userTextTxt);

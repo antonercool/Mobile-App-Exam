@@ -1,11 +1,9 @@
 package dk.au.mad21fall.assignment.sousvideentusiaster.ListView;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -100,7 +98,7 @@ public class PostHelpAdapter extends RecyclerView.Adapter<PostHelpAdapter.PostVi
             userName = itemView.findViewById(R.id.list_item_usernameTxt);
             timePosted = itemView.findViewById(R.id.list_item_timePostedTxt);
             postedImage = itemView.findViewById(R.id.list_item_image);
-            profileImage = itemView.findViewById(R.id.list_item_profilePic);
+            profileImage = itemView.findViewById(R.id.tis);
             chipText01 = itemView.findViewById(R.id.list_item_chip01);
             chipText02 = itemView.findViewById(R.id.list_item_chip02);
             chipStatus = itemView.findViewById(R.id.list_item_help_chipStatus);

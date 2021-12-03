@@ -26,10 +26,10 @@
                 android:id="@+id/list_item_timePostedTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
                 android:text="TextView"
                 android:textSize="10sp"
-                app:layout_constraintStart_toEndOf="@+id/list_item_profilePic"
+                app:layout_constraintStart_toEndOf="@+id/item_flex_profile"
                 app:layout_constraintTop_toBottomOf="@+id/list_item_usernameTxt"
                 tools:text="43 minutes ago." />
 
@@ -37,11 +37,11 @@
                 android:id="@+id/list_item_usernameTxt"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
                 android:text="TextView"
                 android:textSize="12sp"
-                app:layout_constraintStart_toEndOf="@+id/list_item_profilePic"
+                app:layout_constraintStart_toEndOf="@+id/item_flex_profile"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Mathias Jacobsen" />
 
@@ -63,10 +63,13 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="30dp"
+                android:clickable="false"
                 android:ems="10"
+                android:enabled="false"
                 android:gravity="start|top"
                 android:includeFontPadding="false"
                 android:inputType="textMultiLine"
+                android:textColor="@color/GRAYER"
                 android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -103,7 +106,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="260dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/list_item_profilePic"
+                app:layout_constraintTop_toBottomOf="@+id/item_flex_profile"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <RatingBar
@@ -143,23 +146,13 @@
                 tools:text="4H" />
 
             <ImageView
-                android:id="@+id/list_item_profilePic"
-                android:layout_width="31dp"
-                android:layout_height="31dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
-
-            <ImageView
                 android:id="@+id/imageView4"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_marginStart="16dp"
                 app:layout_constraintStart_toEndOf="@+id/list_item_commentsTxt"
                 app:layout_constraintTop_toBottomOf="@+id/list_item_userTextTxt"
-                app:srcCompat="@drawable/profile_icon" />
+                app:srcCompat="@drawable/ic_hourglass_start_solid" />
 
             <ImageView
                 android:id="@+id/imageView5"
@@ -168,6 +161,16 @@
                 app:layout_constraintStart_toEndOf="@+id/list_item_degreesTxt"
                 app:layout_constraintTop_toBottomOf="@+id/list_item_userTextTxt"
                 app:srcCompat="@drawable/profile_icon" />
+
+            <ImageView
+                android:id="@+id/item_flex_profile"
+                android:layout_width="31dp"
+                android:layout_height="31dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@mipmap/user_icon" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

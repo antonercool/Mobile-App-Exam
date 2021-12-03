@@ -29,7 +29,7 @@
                 android:layout_marginStart="8dp"
                 android:text="TextView"
                 android:textSize="10sp"
-                app:layout_constraintStart_toEndOf="@+id/list_item_profilePic"
+                app:layout_constraintStart_toEndOf="@+id/tis"
                 app:layout_constraintTop_toBottomOf="@+id/list_item_usernameTxt"
                 tools:text="43 minutes ago." />
 
@@ -41,7 +41,7 @@
                 android:layout_marginTop="8dp"
                 android:text="TextView"
                 android:textSize="12sp"
-                app:layout_constraintStart_toEndOf="@+id/list_item_profilePic"
+                app:layout_constraintStart_toEndOf="@+id/tis"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Mathias Jacobsen" />
 
@@ -107,7 +107,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="260dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/list_item_profilePic"
+                app:layout_constraintTop_toBottomOf="@+id/tis"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <TextView
@@ -122,14 +122,15 @@
                 tools:text="23 comments" />
 
             <ImageView
-                android:id="@+id/list_item_profilePic"
+                android:id="@+id/tis"
                 android:layout_width="31dp"
                 android:layout_height="31dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                app:srcCompat="@mipmap/user_icon"
+                tools:srcCompat="@mipmap/user_icon" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
