@@ -4,15 +4,24 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -28,6 +37,7 @@ import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.PictureMo
 
 public class SousVideRepository {
 
+    private static final String TAG = "SOUS_VIDE_REPOSITORY";
     private static FirebaseUtils firebaseUtils;
     private static SousVideRepository instance;
 
@@ -68,8 +78,7 @@ public class SousVideRepository {
                                     });
                         }
                     } else {
-                        // Handle failures
-                        // ...
+                        Log.e(TAG, "Failed to add new flex post: ");
                     }
                 }
             });
@@ -78,7 +87,7 @@ public class SousVideRepository {
 
 
     // Refence https://firebase.google.com/docs/storage/android/upload-files
-    public Task<Uri> uploadImageAsync(String path) {
+    private Task<Uri> uploadImageAsync(String path) {
         Bitmap bitmap = BitmapFactory.decodeFile(path);
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -104,6 +113,20 @@ public class SousVideRepository {
         });
 
         return urlTask;
+    }
+
+
+    public Task<QuerySnapshot> getNewestBatchFromTime(Date fromTime, int limit) {
+
+        //asynchronously retrieve multiple documents
+        Task<QuerySnapshot> fetchTask =  firebaseUtils.getFlexPostsDocumentReference()
+                .collection("posts")
+                .whereLessThan("created", fromTime)
+                .orderBy("created", Query.Direction.ASCENDING)
+                .limit(limit)
+                .get();
+
+        return fetchTask;
     }
 
 

@@ -18,9 +18,11 @@ public class FlexPostModel {
     public String owner;
     public int stars;
     public String url;
+    public int numberOfComments;
 
     public ArrayList<PictureModel> pictures;
     public ArrayList<CommentModel> comments;
+
 
     public FlexPostModel(){};
 
@@ -38,11 +40,93 @@ public class FlexPostModel {
         this.numberOfComments = numberOfComments;
     }
 
-    @Exclude
-    public int numberOfComments;
+    public Date getCreated() {
+        return created;
+    }
 
+    public void setCreated(Date created) {
+        this.created = created;
+    }
 
+    public String getDescription() {
+        return description;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getHoursCooked() {
+        return hoursCooked;
+    }
+
+    public void setHoursCooked(int hoursCooked) {
+        this.hoursCooked = hoursCooked;
+    }
+
+    public int getTemp() {
+        return temp;
+    }
+
+    public void setTemp(int temp) {
+        this.temp = temp;
+    }
+
+    public ArrayList<String> getLabels() {
+        return labels;
+    }
+
+    public void setLabels(ArrayList<String> labels) {
+        this.labels = labels;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public int getStars() {
+        return stars;
+    }
+
+    public void setStars(int stars) {
+        this.stars = stars;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public int getNumberOfComments() {
+        return numberOfComments;
+    }
+
+    public void setNumberOfComments(int numberOfComments) {
+        this.numberOfComments = numberOfComments;
+    }
+
+    public ArrayList<PictureModel> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(ArrayList<PictureModel> pictures) {
+        this.pictures = pictures;
+    }
+
+    public ArrayList<CommentModel> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<CommentModel> comments) {
+        this.comments = comments;
+    }
 }
 
 
