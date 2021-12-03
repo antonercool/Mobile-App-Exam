@@ -18,6 +18,7 @@ import java.util.Random;
 
 import dk.au.mad21fall.assignment.sousvideentusiaster.ListView.Comment;
 import dk.au.mad21fall.assignment.sousvideentusiaster.ListView.CommentAdapter;
+import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.INavigator;
 import dk.au.mad21fall.assignment.sousvideentusiaster.R;
 
 public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICommentItemClickedListener {
@@ -31,7 +32,7 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
     private CommentAdapter adapter;
 
     EditText addComment;
-    ImageView image_profile;
+    ImageView image_profile, cancel_cross;
     TextView post;
 
     @Override
@@ -57,6 +58,7 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
 
         addComment = findViewById(R.id.add_comment);
         image_profile = findViewById(R.id.image_profile);
+        cancel_cross = findViewById(R.id.cancel_cross);
         post = findViewById(R.id.post);
 
         post.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +74,13 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
 
                     adapter.updateCommentList(commentArrayList);
                 }
+            }
+        });
+
+        cancel_cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
