@@ -23,4 +23,8 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("dk.au.mad21fall.assignment.sousvideentusiaster", appContext.getPackageName());
     }
+
+
+
+
 }

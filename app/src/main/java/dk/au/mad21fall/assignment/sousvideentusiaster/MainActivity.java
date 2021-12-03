@@ -23,13 +23,9 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.FirebaseUtils;
-import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.Comment;
-import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.FlexPost;
-import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.Picture;
+import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.FlexPostModel;
+import dk.au.mad21fall.assignment.sousvideentusiaster.Repository.SousVideRepository;
 
 public class MainActivity extends AppCompatActivity  {
 
@@ -45,6 +41,7 @@ public class MainActivity extends AppCompatActivity  {
 
     private FirebaseFirestore db;
     private FirebaseUtils firestoreUtils;
+    private SousVideRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +51,7 @@ public class MainActivity extends AppCompatActivity  {
         setUpUiElements();
         firestoreUtils = new FirebaseUtils();
         db = firestoreUtils.getFirestoreInstance();
+        repository = SousVideRepository.getSousVideRepositoryInstance();
     }
 
     private void setUpUiElements(){
@@ -71,7 +69,7 @@ public class MainActivity extends AppCompatActivity  {
         @Override
         public void onClick(View view) {
 
-            FlexPost newPost = firestoreUtils.getFlexObject();
+            FlexPostModel newPost = repository.getTestFlexObject();
             CollectionReference bla = db.collection("posts");
 
 
@@ -103,13 +101,7 @@ public class MainActivity extends AppCompatActivity  {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
-    /**
-     * Checks if the app has permission to write to device storage
-     *
-     * If the app does not has permission then the user will be prompted to grant permissions
-     *
-     * @param activity
-     */
+
     public void verifyStoragePermissions() {
         // Check if we have write permission
         int permission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -150,7 +142,7 @@ public class MainActivity extends AppCompatActivity  {
             cursor.close();
             // String picturePath contains the path of selected Image
 
-            Uri downloaduri = firestoreUtils.uploadImage(picturePath);
+            //Uri downloaduri = firestoreUtils.uploadImage(picturePath);
             //text.setText(downloaduri.toString());
         }
     }
