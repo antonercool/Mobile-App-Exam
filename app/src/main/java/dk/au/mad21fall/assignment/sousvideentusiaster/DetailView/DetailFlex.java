@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -44,21 +46,18 @@ import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.CommentMo
 import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.FlexPostModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.PictureModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.ListView.CommentAdapter;
+import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.Fragments.FlexViewModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.R;
 import dk.au.mad21fall.assignment.sousvideentusiaster.Repository.SousVideRepository;
 
 public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICommentItemClickedListener {
 
-    private static final String TAG = "DETAIL FLEX VIEW";
-    private ArrayList<CommentModel> commentArrayList = new ArrayList<>();
-
-    public static final int NUM_COMMENTS = 1;
-
-    //widgets
+      //widgets
     private RecyclerView rcvList;
     private CommentAdapter adapter;
     ImageAdaptor imageAdaptor;
-    private SousVideRepository sousVideRepository;
+
+    private DetailFlexViewModel detailFlexViewModel;
     private String ID;
 
     EditText addComment;
@@ -75,33 +74,13 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_flex);
-        sousVideRepository = SousVideRepository.getSousVideRepositoryInstance();
 
-        ID = getIntent().getStringExtra("ID"); //TODO VM
+        ID = getIntent().getStringExtra("ID");
+        detailFlexViewModel = new ViewModelProvider(this).get(DetailFlexViewModel.class);
+        detailFlexViewModel.Init(ID);
 
-        //create data and update adapter/recyclerview
         setupUIElements();
         updateUI(ID);
-
-        imageAdaptor = new ImageAdaptor(this);
-
-
-        sousVideRepository.subscribeToFlexComments(ID)
-                .orderBy("created", Query.Direction.ASCENDING)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        ArrayList<CommentModel> newComments = new ArrayList<>();
-                        for(QueryDocumentSnapshot doc : value){
-                            CommentModel newBroadcastedComment = doc.toObject(CommentModel.class);
-                            newComments.add(newBroadcastedComment);
-                        }
-
-                        adapter.updateCommentList(newComments);
-                    }
-                });
-
-
     }
 
     @Override
@@ -110,83 +89,79 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
     }
 
     public void updateUI(String ID){
-        sousVideRepository.fetchFlexCommentsByPostID(ID).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        detailFlexViewModel.getFlexPostComments(ID).observe(this, new Observer<ArrayList<CommentModel>>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isComplete()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        CommentModel currentObject = document.toObject(CommentModel.class);
-                        commentArrayList.add(currentObject);
-                    }
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                }
-                adapter.updateCommentList(commentArrayList);
+            public void onChanged(ArrayList<CommentModel> commentModels) {
+                adapter.updateCommentList(commentModels);
+
+                // Increment number of comments
+                numberOfComments.setText(commentModels.size() + " Comment(s).");
             }
         });
 
-
-        sousVideRepository.fetchFlexPostByID(ID).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        detailFlexViewModel.getFlexPostModels(ID).observe(this, new Observer<FlexPostModel>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isComplete()){
-                    FlexPostModel flexPostModel = task.getResult().toObject(FlexPostModel.class);
-                    title.setText(flexPostModel.title);
-                    description.setText(flexPostModel.description);
+            public void onChanged(FlexPostModel flexPostModel) {
+                if(flexPostModel.title == null){
+                    return;
+                }
+                title.setText(flexPostModel.title);
+                description.setText(flexPostModel.description);
 
-                    // Load userprofile for comment section
-                    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                    Uri userPhotoUri = firebaseUser.getPhotoUrl();
-                    Glide.with(getApplicationContext()).load(userPhotoUri).into(image_profile);
+                // Load userprofile for comment section
+                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                Uri userPhotoUri = firebaseUser.getPhotoUrl();
+                Glide.with(getApplicationContext()).load(userPhotoUri).into(image_profile);
 
-                    chip01.setText(flexPostModel.labels.get(0));
-                    chip01.setText(flexPostModel.labels.get(0));
-                    timeCoocked.setText(Integer.toString(flexPostModel.hoursCooked) + " Hour(s).");
-                    temperature.setText(Integer.toString(flexPostModel.temp) + " Degrees.");
-                    title.setText(flexPostModel.title);
-                    postedUsername.setText(flexPostModel.owner);
-                    stars.setNumStars(flexPostModel.stars);
+                chip01.setText(flexPostModel.labels.get(0));
+                chip02.setText(flexPostModel.labels.get(0));
+                timeCoocked.setText(Integer.toString(flexPostModel.hoursCooked) + " Hour(s).");
+                temperature.setText(Integer.toString(flexPostModel.temp) + " Degrees.");
+                title.setText(flexPostModel.title);
+                postedUsername.setText(flexPostModel.owner);
+                stars.setNumStars(flexPostModel.stars);
 
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-M hh:mm");
-                    postedAtTime.setText(simpleDateFormat.format(flexPostModel.created));
-                    numberOfComments.setText(Integer.toString(flexPostModel.numberOfComments) + " Comment(s).");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-M hh:mm");
+                postedAtTime.setText(simpleDateFormat.format(flexPostModel.created));
+                numberOfComments.setText(Integer.toString(flexPostModel.numberOfComments) + " Comment(s).");
 
-                    ArrayList<Bitmap> bitmaps = new ArrayList<>();
-                    for (PictureModel pictureModel: flexPostModel.pictures){
-                        Glide.with(getApplicationContext())
-                                .asBitmap()
-                                .load(pictureModel.url)
-                                .listener(new RequestListener<Bitmap>() {
-                                    @Override
-                                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                                        return false;
+                ArrayList<Bitmap> bitmaps = new ArrayList<>();
+                for (PictureModel pictureModel: flexPostModel.pictures){
+                    Glide.with(getApplicationContext())
+                            .asBitmap()
+                            .load(pictureModel.url)
+                            .listener(new RequestListener<Bitmap>() {
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                    bitmaps.add(resource);
+                                    if (bitmaps.size() == flexPostModel.pictures.size())
+                                    {
+                                        // request this on ui thread
+                                        Runnable toMainUi = new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                imageAdaptor.initImages(bitmaps);
+                                                postedImage.setAdapter(imageAdaptor);
+                                            }
+                                        };
+                                        DetailFlex.this.runOnUiThread(toMainUi);
                                     }
-
-                                    @Override
-                                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                                        bitmaps.add(resource);
-                                        if (bitmaps.size() == flexPostModel.pictures.size())
-                                        {
-                                            // request this on ui thread
-                                            Runnable toMainUi = new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    imageAdaptor.initImages(bitmaps);
-                                                    postedImage.setAdapter(imageAdaptor);
-                                                }
-                                            };
-                                            DetailFlex.this.runOnUiThread(toMainUi);
-                                        }
-                                        return false;
-                                    }
-                                }).submit();
-                    }
+                                    return false;
+                                }
+                            }).submit();
                 }
             }
         });
     }
 
     public void setupUIElements(){
+        imageAdaptor = new ImageAdaptor(this);
+
         adapter = new CommentAdapter(this);
         rcvList = findViewById(R.id.flex_commentSection_recyclerView);
         rcvList.setLayoutManager(new LinearLayoutManager(this));
@@ -238,18 +213,6 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
         rcvList.setAdapter(adapter);
     }
 
-
-/*
-    private void createData() {
-        commentArrayList = new ArrayList<Comment>();
-        Random r = new Random();
-        for(int i = 0; i < NUM_COMMENTS; i++){
-            commentArrayList.add(new Comment("With an extra ImageView we can set the TextView to be baseline aligned with the ImageView and set the android:baselineAlignBottom on the ImageView to true, which will make the baseline of ImageView to bottom." + i,
-                    i + " Anton Slimo"
-            ));
-        }
-    }
-*/
     private void addComment() {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String username = firebaseUser.getDisplayName();
@@ -260,13 +223,7 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
                 username,
                 userPhotoUri.toString());
 
-        // Increment number of comments
-        String[] commentElements = numberOfComments.getText().toString().split(" ");
-        int updatedNumberOfComment = Integer.valueOf(commentElements[0]);
-        updatedNumberOfComment++;
-        numberOfComments.setText(String.valueOf(updatedNumberOfComment) + " " + commentElements[1]);
-
         // Update firestore and broadcast other view with update
-        sousVideRepository.postFlexComment(ID, commentModel);
+       detailFlexViewModel.postFlexComment(ID, commentModel);
     }
 }

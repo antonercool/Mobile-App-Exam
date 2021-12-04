@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,21 +35,13 @@ import dk.au.mad21fall.assignment.sousvideentusiaster.Utils.Permissions;
 
 public class PostHelp extends Fragment {
 
-    private static int RESULT_LOAD_IMAGE = 1;
     private static int GALLERY_ID = 999;
-    private int upload_counter = 0;
     private ImageView[] imageArray = new ImageView[5];
-    private String[] imagePaths = new String[5];
+    private PostHelpViewModel postHelpViewModel;
 
     Button postBttn, cancelBttn, uploadBttn;
     TextView title, content, uploadCounter, coockedMeat;
     ImageView img01, img02, img03, img04, img05;
-
-    private SousVideRepository sousVideRepository;
-
-    public static PostHelp newInstance() {
-        return new PostHelp();
-    }
 
     @Nullable
     @Override
@@ -56,14 +49,8 @@ public class PostHelp extends Fragment {
         View view = inflater.inflate(R.layout.post_help_fragment, container, false);
         InitUIElements(view);
 
-        // setUp singleton
-        // TODO VM
-        sousVideRepository = SousVideRepository.getSousVideRepositoryInstance();
-
-        // SetUp Button clicked Listeners
-        uploadBttn.setOnClickListener(uploadButtonOnClickedListener);
-        postBttn.setOnClickListener(postFlexButtonOnClickedListener);
-        cancelBttn.setOnClickListener(cancelButtonOnClickedListener);
+        postHelpViewModel = new ViewModelProvider(this).get(PostHelpViewModel.class);
+        postHelpViewModel.init();
 
         return view;
     }
@@ -90,7 +77,6 @@ public class PostHelp extends Fragment {
                 pictures, comments,
                 comments.size(),
                 title.getText().toString());
-
 
         return questionPost;
     }
@@ -121,7 +107,7 @@ public class PostHelp extends Fragment {
         public void onClick(View view) {
             if (validateReqForPost()) {
                 QuestionPostModel fromUiModel = generatePostableModelFromUi();
-                sousVideRepository.postNewQuestionPostAsync(fromUiModel, imagePaths, upload_counter, getActivity());
+                postHelpViewModel.postNewQuestion(fromUiModel, postHelpViewModel.imagePaths, postHelpViewModel.uploadCounter, getActivity());
                 ((INavigator) getActivity()).onHelpPostCancelClicked();
             }
         }
@@ -160,12 +146,12 @@ public class PostHelp extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK && requestCode == GALLERY_ID) {
-            upload_counter++;
-            uploadCounter.setText(String.valueOf(upload_counter) + "/5");
-            imageArray[upload_counter - 1].setVisibility(View.VISIBLE);
-            imagePaths[upload_counter - 1] = convertUriToAndroidGalleryPath(data.getData());
+            postHelpViewModel.uploadCounter++;
+            uploadCounter.setText(String.valueOf(postHelpViewModel.uploadCounter) + "/5");
+            imageArray[postHelpViewModel.uploadCounter - 1].setVisibility(View.VISIBLE);
+            postHelpViewModel.imagePaths[postHelpViewModel.uploadCounter - 1] = convertUriToAndroidGalleryPath(data.getData());
 
-            if (upload_counter == 5) {
+            if (postHelpViewModel.uploadCounter == 5) {
                 uploadBttn.setEnabled(false);
             }
 
@@ -175,7 +161,6 @@ public class PostHelp extends Fragment {
 
 
     public void InitUIElements(View view) {
-
         postBttn = view.findViewById(R.id.post_help_postBttn);
         cancelBttn = view.findViewById(R.id.post_help_cancelBttn);
         uploadBttn = view.findViewById(R.id.post_help_uploadBttn);
@@ -202,6 +187,11 @@ public class PostHelp extends Fragment {
         imageArray[2] = img03;
         imageArray[3] = img04;
         imageArray[4] = img05;
+
+        // SetUp Button clicked Listeners
+        uploadBttn.setOnClickListener(uploadButtonOnClickedListener);
+        postBttn.setOnClickListener(postFlexButtonOnClickedListener);
+        cancelBttn.setOnClickListener(cancelButtonOnClickedListener);
     }
 
 

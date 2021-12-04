@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,6 +43,7 @@ public class Question extends Fragment implements PostHelpAdapter.IPostItemClick
     private RecyclerView rcvList;
     private PostHelpAdapter adapter;
     private SousVideRepository sousVideRepository;
+    private QuestionViewModel questionViewModel;
 
     //data (should come from Firebase
     private ArrayList<QuestionPostModel> questionPostArrayList = new ArrayList<>();
@@ -52,7 +55,8 @@ public class Question extends Fragment implements PostHelpAdapter.IPostItemClick
         View view = inflater.inflate(R.layout.help_fragment, container, false);
         setupUIElements(view);
 
-        sousVideRepository = SousVideRepository.getSousVideRepositoryInstance();
+        questionViewModel = new ViewModelProvider(getActivity()).get(QuestionViewModel.class);
+        questionViewModel.Init();
 
         updateUi();
 
@@ -60,39 +64,12 @@ public class Question extends Fragment implements PostHelpAdapter.IPostItemClick
     }
 
     private void updateUi() {
-        sousVideRepository.fetchNewestHelp(NUM_ITEMS)
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                QuestionPostModel currentObject = document.toObject(QuestionPostModel.class);
-                                currentObject.id = document.getId();
-                                questionPostArrayList.add(currentObject);
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                        adapter.updateHelpPostList(questionPostArrayList);
-                    }
-                });
-
-        // Subribe to posts, when any is edited update comments
-        sousVideRepository.subscribeToHelpPosts()
-                .orderBy("created", Query.Direction.DESCENDING)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        ArrayList<QuestionPostModel> newHelpModels = new ArrayList<QuestionPostModel>();
-                        for (DocumentSnapshot doc : value){
-                            QuestionPostModel changedObject = doc.toObject(QuestionPostModel.class);
-                            changedObject.setId(doc.getId());
-
-                            newHelpModels.add(changedObject);
-                        }
-                        adapter.updateHelpPostList(newHelpModels);
-                    }
-                });
+        questionViewModel.getHelpPostModels().observe(getActivity(), new Observer<ArrayList<QuestionPostModel>>() {
+            @Override
+            public void onChanged(ArrayList<QuestionPostModel> questionPostModels) {
+                adapter.updateHelpPostList(questionPostModels);
+            }
+        });
     }
 
 
@@ -112,31 +89,8 @@ public class Question extends Fragment implements PostHelpAdapter.IPostItemClick
         });
 
         rcvList.setAdapter(adapter);
-
-        //create data and update adapter/recyclerview
     }
 
-    /*
-    private void createData() {
-        flexPostArrayList = new ArrayList<FlexPostModel>();
-        Random r = new Random();
-        for(int i = 0; i < NUM_ITEMS; i++){
-            flexPostArrayList.add(new FlexPostModel("Matias munkeskider " + i,
-                    i + " Minutes ago.",
-                    "Mørbrad " + i,
-                    "Svinekam " + i,
-                    "Lorem Ipsum is simply dummy text of the printing" +
-                            " and typesetting industry. Lorem Ipsum has been the" +
-                            " industry's standard dummy text ever since the 1500s," +
-                            " when an unknown printer took a galley of type and scrambled" +
-                            " it to make a",
-                    i ,
-                    i,
-                    i,
-                    i
-                    ));
-        }
-    }*/
 
     @Override
     public void onPostClicked(String ID) {

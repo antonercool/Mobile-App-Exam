@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.Date;
 
+import dk.au.mad21fall.assignment.sousvideentusiaster.DetailView.DetailFlexViewModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.CommentModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.FlexPostModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.PictureModel;
@@ -34,21 +36,13 @@ import dk.au.mad21fall.assignment.sousvideentusiaster.Utils.Permissions;
 
 public class PostFlex extends Fragment {
 
-    private static int RESULT_LOAD_IMAGE = 1;
     private static int GALLERY_ID = 999;
-    private int upload_counter = 0;
     private ImageView[] imageArray = new ImageView[5];
-    private String[] imagePaths = new String[5];
+    private PostFlexViewModel postFlexViewModel;
 
     Button postBttn, cancelBttn, uploadBttn;
     TextView title, content, temperature, time, uploadCounter, coockedMeat;
     ImageView img01, img02, img03, img04, img05;
-
-    private SousVideRepository sousVideRepository;
-
-    public static PostFlex newInstance() {
-        return new PostFlex();
-    }
 
     @Nullable
     @Override
@@ -56,14 +50,8 @@ public class PostFlex extends Fragment {
         View view = inflater.inflate(R.layout.post_flex_fragment, container, false);
         InitUIElements(view);
 
-        // setUp singleton
-        // TODO VM
-        sousVideRepository = SousVideRepository.getSousVideRepositoryInstance();
-
-        // SetUp Button clicked Listeners
-        uploadBttn.setOnClickListener(uploadButtonOnClickedListener);
-        postBttn.setOnClickListener(postFlexButtonOnClickedListener);
-        cancelBttn.setOnClickListener(cancelButtonOnClickedListener);
+        postFlexViewModel = new ViewModelProvider(this).get(PostFlexViewModel.class);
+        postFlexViewModel.init();
 
         return view;
     }
@@ -130,7 +118,7 @@ public class PostFlex extends Fragment {
         public void onClick(View view) {
             if (validateReqForPost()) {
                 FlexPostModel fromUiModel = generatePostableModelFromUi();
-                sousVideRepository.postNewFlexPostAsync(fromUiModel, imagePaths, upload_counter, getActivity());
+                postFlexViewModel.postNewQuestion(fromUiModel, postFlexViewModel.imagePaths, postFlexViewModel.uploadCounter, getActivity());
                 ((INavigator) getActivity()).onFlexPostCancelClicked();
             }
         }
@@ -148,7 +136,6 @@ public class PostFlex extends Fragment {
         return picturePath;
     }
 
-
     private View.OnClickListener cancelButtonOnClickedListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -165,16 +152,15 @@ public class PostFlex extends Fragment {
         }
     };
 
-    // TODO use new way to doing this.
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK && requestCode == GALLERY_ID) {
-            upload_counter++;
-            uploadCounter.setText(String.valueOf(upload_counter) + "/5");
-            imageArray[upload_counter - 1].setVisibility(View.VISIBLE);
-            imagePaths[upload_counter - 1] = convertUriToAndroidGalleryPath(data.getData());
+            postFlexViewModel.uploadCounter++;
+            uploadCounter.setText(String.valueOf(postFlexViewModel.uploadCounter) + "/5");
+            imageArray[postFlexViewModel.uploadCounter - 1].setVisibility(View.VISIBLE);
+            postFlexViewModel.imagePaths[postFlexViewModel.uploadCounter - 1] = convertUriToAndroidGalleryPath(data.getData());
 
-            if (upload_counter == 5) {
+            if (postFlexViewModel.uploadCounter == 5) {
                 uploadBttn.setEnabled(false);
             }
 
@@ -213,6 +199,11 @@ public class PostFlex extends Fragment {
         imageArray[2] = img03;
         imageArray[3] = img04;
         imageArray[4] = img05;
+
+        // SetUp Button clicked Listeners
+        uploadBttn.setOnClickListener(uploadButtonOnClickedListener);
+        postBttn.setOnClickListener(postFlexButtonOnClickedListener);
+        cancelBttn.setOnClickListener(cancelButtonOnClickedListener);
     }
 
 

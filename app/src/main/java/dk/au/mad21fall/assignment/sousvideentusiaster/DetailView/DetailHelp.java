@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -41,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.CommentModel;
+import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.FlexPostModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.PictureModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.QuestionPostModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.ListView.CommentAdapter;
@@ -49,21 +52,16 @@ import dk.au.mad21fall.assignment.sousvideentusiaster.Repository.SousVideReposit
 
 public class DetailHelp extends AppCompatActivity implements CommentAdapter.ICommentItemClickedListener {
 
-    private static final String TAG = "DETAIL HELP VIEW";
-    private ArrayList<CommentModel> commentArrayList = new ArrayList<>();
-
-    public static final int NUM_COMMENTS = 1;
-
     //widgets
     private RecyclerView rcvList;
     private CommentAdapter adapter;
     ImageAdaptor imageAdaptor;
-    private SousVideRepository sousVideRepository;
+    private DetailHelpViewModel detailHelpViewModel;
     private String ID;
 
     EditText addComment;
     TextView title, description,
-            numberOfComments, commentDate, commentUser, postedAtTime, postedUsername;
+            numberOfComments, postedAtTime, postedUsername;
     ViewPager postedImage;
     Chip chip01, chip02;
     RatingBar stars;
@@ -75,33 +73,14 @@ public class DetailHelp extends AppCompatActivity implements CommentAdapter.ICom
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_help);
-        sousVideRepository = SousVideRepository.getSousVideRepositoryInstance();
 
-        ID = getIntent().getStringExtra("ID"); //TODO VM
+        ID = getIntent().getStringExtra("ID");
+        detailHelpViewModel = new ViewModelProvider(this).get(DetailHelpViewModel.class);
+        detailHelpViewModel.Init(ID);
 
         //create data and update adapter/recyclerview
         setupUIElements();
         updateUI(ID);
-
-        imageAdaptor = new ImageAdaptor(this);
-
-
-        sousVideRepository.subscribeToHelpComments(ID)
-                .orderBy("created", Query.Direction.ASCENDING)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        ArrayList<CommentModel> newComments = new ArrayList<>();
-                        for(QueryDocumentSnapshot doc : value){
-                            CommentModel newBroadcastedComment = doc.toObject(CommentModel.class);
-                            newComments.add(newBroadcastedComment);
-                        }
-
-                        adapter.updateCommentList(newComments);
-                    }
-                });
-
-
     }
 
     @Override
@@ -110,79 +89,77 @@ public class DetailHelp extends AppCompatActivity implements CommentAdapter.ICom
     }
 
     public void updateUI(String ID){
-        sousVideRepository.fetchHelpCommentsByPostID(ID).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        detailHelpViewModel.getHelpPostComments(ID).observe(this, new Observer<ArrayList<CommentModel>>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isComplete()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        CommentModel currentObject = document.toObject(CommentModel.class);
-                        commentArrayList.add(currentObject);
-                    }
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                }
-                adapter.updateCommentList(commentArrayList);
+            public void onChanged(ArrayList<CommentModel> commentModels) {
+                adapter.updateCommentList(commentModels);
+
+                // Increment number of comments
+                numberOfComments.setText(commentModels.size() + " Comments(s)");
             }
         });
 
 
-        sousVideRepository.fetchHelpPostByID(ID).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        detailHelpViewModel.getHelpPostModels(ID).observe(this, new Observer<QuestionPostModel>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isComplete()){
-                    QuestionPostModel questionPostModel = task.getResult().toObject(QuestionPostModel.class);
-                    title.setText(questionPostModel.title);
-                    description.setText(questionPostModel.description);
+            public void onChanged(QuestionPostModel questionPostModel) {
+                if(questionPostModel.title == null){
+                    return;
+                }
+                title.setText(questionPostModel.title);
+                description.setText(questionPostModel.description);
 
-                    // Load userprofile for comment section
-                    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                    Uri userPhotoUri = firebaseUser.getPhotoUrl();
-                    Glide.with(getApplicationContext()).load(userPhotoUri).into(image_profile);
+                // Load userprofile for comment section
+                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                Uri userPhotoUri = firebaseUser.getPhotoUrl();
+                Glide.with(getApplicationContext()).load(userPhotoUri).into(image_profile);
 
-                    chip01.setText(questionPostModel.labels.get(0));
-                    chip01.setText(questionPostModel.labels.get(0));
-                    postedUsername.setText(questionPostModel.owner);
+                chip01.setText(questionPostModel.labels.get(0));
+                chip02.setText(questionPostModel.labels.get(0));
+                title.setText(questionPostModel.title);
+                postedUsername.setText(questionPostModel.owner);
 
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-M hh:mm");
-                    postedAtTime.setText(simpleDateFormat.format(questionPostModel.created));
-                    numberOfComments.setText(Integer.toString(questionPostModel.numberOfComments) + " Comment(s).");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-M hh:mm");
+                postedAtTime.setText(simpleDateFormat.format(questionPostModel.created));
+                numberOfComments.setText(Integer.toString(questionPostModel.numberOfComments) + " Comment(s).");
 
-                    ArrayList<Bitmap> bitmaps = new ArrayList<>();
-                    for (PictureModel pictureModel: questionPostModel.pictures){
-                        Glide.with(getApplicationContext())
-                                .asBitmap()
-                                .load(pictureModel.url)
-                                .listener(new RequestListener<Bitmap>() {
-                                    @Override
-                                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                                        return false;
+                ArrayList<Bitmap> bitmaps = new ArrayList<>();
+                for (PictureModel pictureModel: questionPostModel.pictures){
+                    Glide.with(getApplicationContext())
+                            .asBitmap()
+                            .load(pictureModel.url)
+                            .listener(new RequestListener<Bitmap>() {
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                    bitmaps.add(resource);
+                                    if (bitmaps.size() == questionPostModel.pictures.size())
+                                    {
+                                        // request this on ui thread
+                                        Runnable toMainUi = new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                imageAdaptor.initImages(bitmaps);
+                                                postedImage.setAdapter(imageAdaptor);
+                                            }
+                                        };
+                                        DetailHelp.this.runOnUiThread(toMainUi);
                                     }
-
-                                    @Override
-                                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                                        bitmaps.add(resource);
-                                        if (bitmaps.size() == questionPostModel.pictures.size())
-                                        {
-                                            // request this on ui thread
-                                            Runnable toMainUi = new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    imageAdaptor.initImages(bitmaps);
-                                                    postedImage.setAdapter(imageAdaptor);
-                                                }
-                                            };
-                                            DetailHelp.this.runOnUiThread(toMainUi);
-                                        }
-                                        return false;
-                                    }
-                                }).submit();
-                    }
+                                    return false;
+                                }
+                            }).submit();
                 }
             }
         });
     }
 
     public void setupUIElements(){
+        imageAdaptor = new ImageAdaptor(this);
+
         adapter = new CommentAdapter(this);
         rcvList = findViewById(R.id.help_commentSection_recyclerView);
         rcvList.setLayoutManager(new LinearLayoutManager(this));
@@ -228,18 +205,6 @@ public class DetailHelp extends AppCompatActivity implements CommentAdapter.ICom
         rcvList.setAdapter(adapter);
     }
 
-
-/*
-    private void createData() {
-        commentArrayList = new ArrayList<Comment>();
-        Random r = new Random();
-        for(int i = 0; i < NUM_COMMENTS; i++){
-            commentArrayList.add(new Comment("With an extra ImageView we can set the TextView to be baseline aligned with the ImageView and set the android:baselineAlignBottom on the ImageView to true, which will make the baseline of ImageView to bottom." + i,
-                    i + " Anton Slimo"
-            ));
-        }
-    }
-*/
     private void addComment() {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String username = firebaseUser.getDisplayName();
@@ -250,13 +215,7 @@ public class DetailHelp extends AppCompatActivity implements CommentAdapter.ICom
                 username,
                 userPhotoUri.toString());
 
-        // Increment number of comments
-        String[] commentElements = numberOfComments.getText().toString().split(" ");
-        int updatedNumberOfComment = Integer.valueOf(commentElements[0]);
-        updatedNumberOfComment++;
-        numberOfComments.setText(String.valueOf(updatedNumberOfComment) + " " + commentElements[1]);
-
         // Update firestore and broadcast other view with update
-        sousVideRepository.postHelpComment(ID, commentModel);
+        detailHelpViewModel.postHelpComment(ID, commentModel);
     }
 }
