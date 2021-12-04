@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SousVide Entusiaster</string>
+    <string name="show_and_tell_title">Vis og fortæl</string>
+    <string name="questions_title">Spørgsmål</string>
+    <string name="profile_title">Profil</string>
+    <string name="sign_up_with_google">Log ind med Google</string>
+</resources>

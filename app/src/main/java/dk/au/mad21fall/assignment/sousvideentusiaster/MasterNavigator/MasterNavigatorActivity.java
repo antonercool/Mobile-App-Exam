@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -33,12 +34,14 @@ public class MasterNavigatorActivity extends AppCompatActivity implements INavig
         if (savedInstanceState == null){
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, News.newInstance(), null
+                    .replace(R.id.fragment_container, new Flex(), null
                     )
                     .commitNow();
         }
 
         setUpUiElements();
+        View v = menuNavigator.findViewById(R.id.flex_item);
+        v.performClick();
     }
 
     private void setUpUiElements(){

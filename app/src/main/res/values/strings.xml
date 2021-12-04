@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SousVide Entusiaster</string>
+    <string name="show_and_tell_title">Show and tell</string>
+    <string name="questions_title">Questions</string>
+    <string name="profile_title">Profile</string>
+    <string name="sign_up_with_google">Sign up with Google</string>
 </resources>

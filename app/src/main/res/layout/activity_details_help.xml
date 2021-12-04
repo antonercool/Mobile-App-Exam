@@ -8,32 +8,30 @@
 
     <com.google.android.material.chip.Chip
         android:id="@+id/activity_details_help_chip01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="56dp"
         android:enabled="false"
-        android:scaleX="0.8"
-        android:scaleY="0.8"
-        android:text="Mørbrad"
+        android:textAlignment="center"
         android:textColor="@color/GRAYER"
-        android:textSize="12sp"
+        android:textSize="10sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Mørbrad" />
 
     <com.google.android.material.chip.Chip
         android:id="@+id/activity_details_help_chip02"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="54dp"
+        android:layout_width="80dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="7dp"
         android:layout_marginTop="56dp"
         android:enabled="false"
-        android:scaleX="0.8"
-        android:scaleY="0.8"
         android:text="Ripeye"
+        android:textAlignment="center"
         android:textColor="@color/GRAYER"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/activity_details_help_chip01"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/activity_details_help_chip01"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Ripeye" />
 

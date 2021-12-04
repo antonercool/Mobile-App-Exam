@@ -6,19 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".Login.LoginActivity">
 
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="116dp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars"
-        android:background="@drawable/profile_icon"
+        app:srcCompat="@mipmap/food_icon"
+        tools:srcCompat="@mipmap/food_icon"
         tools:visibility="visible" />
-
 
     <View
         android:id="@+id/divider"
@@ -36,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginTop="24dp"
-        android:text="Sign up with Google"
+        android:text="@string/sign_up_with_google"
         app:isDarkTheme="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

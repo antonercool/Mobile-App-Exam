@@ -2,21 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/news_item"
+        android:enabled="false"
         android:icon="@drawable/home_icon"
         android:title="News" />
 
     <item
         android:id="@+id/flex_item"
         android:icon="@drawable/flex_icon"
-        android:title="Show and tell" />
+        android:title="@string/show_and_tell_title" />
 
     <item
         android:id="@+id/question_item"
         android:icon="@drawable/question_solid"
-        android:title="Questions" />
+        android:title="@string/questions_title" />
 
     <item
         android:id="@+id/profile_item"
         android:icon="@drawable/profile_icon"
-        android:title="Profile"/>
+        android:title="@string/profile_title" />
 </menu>
