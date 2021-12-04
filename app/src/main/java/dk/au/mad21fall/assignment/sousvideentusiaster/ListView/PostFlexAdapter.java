@@ -74,8 +74,8 @@ public class PostFlexAdapter extends RecyclerView.Adapter<PostFlexAdapter.PostVi
         holder.postText.setText(flexPostList.get(position).description);
         holder.numberOfComments.setText(Integer.toString(flexPostList.get(position).numberOfComments)+ " Comment(s).");
         holder.rating.setRating(flexPostList.get(position).stars);
-        holder.hoursCooked.setText(String.valueOf(flexPostList.get(position).hoursCooked));
-        holder.degrees.setText(String.valueOf(flexPostList.get(position).temp));
+        holder.hoursCooked.setText(String.valueOf(flexPostList.get(position).hoursCooked) + " Hours.");
+        holder.degrees.setText(String.valueOf(flexPostList.get(position).temp) + " Degrees.");
     }
 
     //override this to return size of list

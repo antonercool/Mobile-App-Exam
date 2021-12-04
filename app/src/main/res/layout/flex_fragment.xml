@@ -18,17 +18,15 @@
         tools:itemCount="10"
         tools:listitem="@layout/list_item_flex" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <ImageView
         android:id="@+id/flex_postBttn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
-        app:backgroundTint="#4CAF50"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_input_add"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:tint="#81C784" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

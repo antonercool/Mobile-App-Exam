@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -107,7 +108,7 @@ public class Flex extends Fragment implements PostFlexAdapter.IPostItemClickedLi
         rcvList = view.findViewById(R.id.recyclerView_help_fragment);
         rcvList.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        FloatingActionButton postNewFlex = view.findViewById(R.id.flex_postBttn);
+        ImageView postNewFlex = view.findViewById(R.id.flex_postBttn);
         postNewFlex.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
