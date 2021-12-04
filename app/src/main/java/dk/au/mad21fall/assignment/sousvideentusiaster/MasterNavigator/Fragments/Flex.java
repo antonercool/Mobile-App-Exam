@@ -80,17 +80,14 @@ public class Flex extends Fragment implements PostFlexAdapter.IPostItemClickedLi
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        ArrayList<FlexPostModel> newFlexModels = new ArrayList<FlexPostModel>();
                         for (DocumentSnapshot doc : value){
                             FlexPostModel changedObject = doc.toObject(FlexPostModel.class);
                             changedObject.setId(doc.getId());
 
-                            for (FlexPostModel model : flexPostArrayList){
-                                if (model.getId().equals(changedObject.getId())){
-                                    model.numberOfComments = changedObject.numberOfComments;
-                                }
-                            }
+                            newFlexModels.add(changedObject);
                         }
-                        adapter.updateFlexPostList(flexPostArrayList);
+                        adapter.updateFlexPostList(newFlexModels);
                     }
                 });
     }
