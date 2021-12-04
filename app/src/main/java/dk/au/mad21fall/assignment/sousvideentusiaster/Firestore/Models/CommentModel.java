@@ -8,6 +8,8 @@ public class CommentModel {
     public String from;
     public String url;
 
+    public String id;
+
     public CommentModel(Date created, String description, String from, String url) {
         this.created = created;
         this.description = description;
@@ -19,6 +21,14 @@ public class CommentModel {
 
     public Date getCreated() {
         return created;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setCreated(Date created) {

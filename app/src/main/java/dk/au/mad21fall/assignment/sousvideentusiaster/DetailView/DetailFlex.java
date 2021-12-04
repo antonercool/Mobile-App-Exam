@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +67,7 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
             numberOfComments, commentDate, commentUser, postedAtTime, postedUsername;
     ViewPager postedImage;
     Chip chip01, chip02;
+    RatingBar stars;
 
     ImageView image_profile, cancel_cross;
     TextView post;
@@ -132,17 +134,23 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
                     FlexPostModel flexPostModel = task.getResult().toObject(FlexPostModel.class);
                     title.setText(flexPostModel.title);
                     description.setText(flexPostModel.description);
-                    Glide.with(getApplicationContext()).load(flexPostModel.url).into(image_profile);
+
+                    // Load userprofile for comment section
+                    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                    Uri userPhotoUri = firebaseUser.getPhotoUrl();
+                    Glide.with(getApplicationContext()).load(userPhotoUri).into(image_profile);
+
                     chip01.setText(flexPostModel.labels.get(0));
                     chip01.setText(flexPostModel.labels.get(0));
                     timeCoocked.setText(Integer.toString(flexPostModel.hoursCooked));
                     temperature.setText(Integer.toString(flexPostModel.temp));
                     title.setText(flexPostModel.title);
                     postedUsername.setText(flexPostModel.owner);
+                    stars.setNumStars(flexPostModel.stars);
 
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/hh:mm");
                     postedAtTime.setText(simpleDateFormat.format(flexPostModel.created));
-                    numberOfComments.setText(Integer.toString(flexPostModel.numberOfComments) + " Comment(s)."); //TODO Fetch number of comments
+                    numberOfComments.setText(Integer.toString(flexPostModel.numberOfComments) + " Comment(s).");
 
                     ArrayList<Bitmap> bitmaps = new ArrayList<>();
                     for (PictureModel pictureModel: flexPostModel.pictures){
@@ -178,6 +186,7 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
             }
         });
     }
+
     public void setupUIElements(){
         adapter = new CommentAdapter(this);
         rcvList = findViewById(R.id.flex_commentSection_recyclerView);
@@ -196,6 +205,8 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
         numberOfComments = findViewById(R.id.activity_details_flex_numberOfComments);
         commentDate = findViewById(R.id.commentCreated);
         commentUser = findViewById(R.id.username);
+        stars = findViewById(R.id.list_item_ratingbar2);
+        stars.setMax(5);
 
         postedAtTime = findViewById(R.id.details_time);
         postedUsername = findViewById(R.id.details_username);
@@ -250,6 +261,13 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
                 username,
                 userPhotoUri.toString());
 
+        // Increment number of comments
+        String[] commentElements = numberOfComments.getText().toString().split(" ");
+        int updatedNumberOfComment = Integer.valueOf(commentElements[0]);
+        updatedNumberOfComment++;
+        numberOfComments.setText(String.valueOf(updatedNumberOfComment) + " " + commentElements[1]);
+
+        // Update firestore and broadcast other view with update
         sousVideRepository.postComment(ID, commentModel);
     }
 }

@@ -20,8 +20,7 @@ public class FlexPostModel {
     public int stars;
     public String url;
     public int numberOfComments;
-    @Exclude
-    public String ID;
+    public String id;
 
     public ArrayList<PictureModel> pictures;
     public ArrayList<CommentModel> comments;
@@ -42,6 +41,15 @@ public class FlexPostModel {
         this.comments = comments;
         this.numberOfComments = numberOfComments;
         this.title = title;
+    }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {

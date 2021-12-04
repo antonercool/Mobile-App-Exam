@@ -54,6 +54,7 @@ public class SousVideRepository {
         return instance;
     }
 
+
     private SousVideRepository() {
     }
 
@@ -126,11 +127,17 @@ public class SousVideRepository {
                 .collection("comments");
     }
 
-    public DocumentReference subscribeToPost(String ID){
+    public DocumentReference subscribeToPostById(String ID){
         return firebaseUtils.getFlexPostsDocumentReference()
                 .collection("posts")
                 .document(ID);
     }
+
+    public CollectionReference subscribeToFlexPosts(){
+        return firebaseUtils.getFlexPostsDocumentReference()
+                .collection("posts");
+    }
+
 
     public Task<QuerySnapshot> getNewestBatchFromTime(Date fromTime, int limit) {
 

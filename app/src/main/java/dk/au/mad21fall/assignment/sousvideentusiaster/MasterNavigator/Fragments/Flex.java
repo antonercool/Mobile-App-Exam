@@ -12,15 +12,21 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Random;
 
+import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.CommentModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.FlexPostModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.ListView.PostFlexAdapter;
 import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.INavigator;
@@ -63,11 +69,30 @@ public class Flex extends Fragment implements PostFlexAdapter.IPostItemClickedLi
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 FlexPostModel currentObject = document.toObject(FlexPostModel.class);
-                                currentObject.ID = document.getId();
+                                currentObject.id = document.getId();
                                 flexPostArrayList.add(currentObject);
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                        adapter.updateFlexPostList(flexPostArrayList);
+                    }
+                });
+
+        // Subribe to posts, when any is edited update comments
+        sousVideRepository.subscribeToFlexPosts()
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        for (DocumentSnapshot doc : value){
+                            FlexPostModel changedObject = doc.toObject(FlexPostModel.class);
+                            changedObject.setId(doc.getId());
+
+                            for (FlexPostModel model : flexPostArrayList){
+                                if (model.getId().equals(changedObject.getId())){
+                                    model.numberOfComments = changedObject.numberOfComments;
+                                }
+                            }
                         }
                         adapter.updateFlexPostList(flexPostArrayList);
                     }

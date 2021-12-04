@@ -72,7 +72,7 @@ public class PostFlexAdapter extends RecyclerView.Adapter<PostFlexAdapter.PostVi
         Glide.with(context).load(flexPostList.get(position).pictures.get(0).url).into(holder.postedImage);
         Glide.with(context).load(flexPostList.get(position).url).into(holder.profileImage);
         holder.postText.setText(flexPostList.get(position).description);
-        holder.numberOfComments.setText(Integer.toString(flexPostList.get(0).numberOfComments)+ " Comment(s).");  //TODO get number of comments
+        holder.numberOfComments.setText(Integer.toString(flexPostList.get(position).numberOfComments)+ " Comment(s).");
         holder.rating.setRating(flexPostList.get(position).stars);
         holder.hoursCooked.setText(String.valueOf(flexPostList.get(position).hoursCooked));
         holder.degrees.setText(String.valueOf(flexPostList.get(position).temp));
@@ -134,7 +134,7 @@ public class PostFlexAdapter extends RecyclerView.Adapter<PostFlexAdapter.PostVi
         //react to user clicking the listItem (implements OnClickListener)
         @Override
         public void onClick(View view){
-            String fetchedID =  flexPostList.get(getAdapterPosition()).ID;
+            String fetchedID =  flexPostList.get(getAdapterPosition()).getId();
             listener.onPostClicked(fetchedID);
         }
     }
