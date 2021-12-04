@@ -64,7 +64,7 @@ public class PostFlexAdapter extends RecyclerView.Adapter<PostFlexAdapter.PostVi
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         holder.userName.setText(flexPostList.get(position).owner);
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/hh:mm");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-M hh:mm");
         holder.timePosted.setText(simpleDateFormat.format(flexPostList.get(position).created));
 
         holder.chipText01.setText(flexPostList.get(position).labels.get(0));

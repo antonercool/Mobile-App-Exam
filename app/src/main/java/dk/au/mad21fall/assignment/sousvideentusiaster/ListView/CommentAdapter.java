@@ -64,7 +64,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         holder.comment.setText(commentList.get(position).description);
         Glide.with(context).load(commentList.get(position).url).into(holder.image_profile);
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/hh:mm");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-M hh:mm");
         holder.commentDate.setText(simpleDateFormat.format(commentList.get(position).created));
 
 

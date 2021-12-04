@@ -147,7 +147,7 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
                     postedUsername.setText(flexPostModel.owner);
                     stars.setNumStars(flexPostModel.stars);
 
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/hh:mm");
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-M hh:mm");
                     postedAtTime.setText(simpleDateFormat.format(flexPostModel.created));
                     numberOfComments.setText(Integer.toString(flexPostModel.numberOfComments) + " Comment(s).");
 

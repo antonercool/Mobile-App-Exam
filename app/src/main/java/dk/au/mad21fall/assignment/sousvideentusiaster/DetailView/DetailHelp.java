@@ -143,7 +143,7 @@ public class DetailHelp extends AppCompatActivity implements CommentAdapter.ICom
                     chip01.setText(questionPostModel.labels.get(0));
                     postedUsername.setText(questionPostModel.owner);
 
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/hh:mm");
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-M hh:mm");
                     postedAtTime.setText(simpleDateFormat.format(questionPostModel.created));
                     numberOfComments.setText(Integer.toString(questionPostModel.numberOfComments) + " Comment(s).");
 

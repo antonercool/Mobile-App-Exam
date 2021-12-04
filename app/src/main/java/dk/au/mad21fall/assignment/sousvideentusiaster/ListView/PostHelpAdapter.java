@@ -63,7 +63,7 @@ public class PostHelpAdapter extends RecyclerView.Adapter<PostHelpAdapter.PostVi
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         holder.userName.setText(helpPostList.get(position).owner);
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/hh:mm");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-M hh:mm");
         holder.timePosted.setText(simpleDateFormat.format(helpPostList.get(position).created));
 
         holder.chipText01.setText(helpPostList.get(position).labels.get(0));
