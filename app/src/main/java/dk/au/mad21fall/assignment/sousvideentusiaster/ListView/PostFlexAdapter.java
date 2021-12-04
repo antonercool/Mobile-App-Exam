@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.TimeZone;
 
 import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.FlexPostModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.R;
@@ -64,6 +65,7 @@ public class PostFlexAdapter extends RecyclerView.Adapter<PostFlexAdapter.PostVi
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         holder.userName.setText(flexPostList.get(position).owner);
 
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC+1"));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-M hh:mm");
         holder.timePosted.setText(simpleDateFormat.format(flexPostList.get(position).created));
 

@@ -18,11 +18,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.FlexPostModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.QuestionPostModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.ListView.PostHelpAdapter;
 import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.INavigator;
@@ -77,20 +79,18 @@ public class Question extends Fragment implements PostHelpAdapter.IPostItemClick
 
         // Subribe to posts, when any is edited update comments
         sousVideRepository.subscribeToHelpPosts()
+                .orderBy("created", Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        ArrayList<QuestionPostModel> newHelpModels = new ArrayList<QuestionPostModel>();
                         for (DocumentSnapshot doc : value){
                             QuestionPostModel changedObject = doc.toObject(QuestionPostModel.class);
                             changedObject.setId(doc.getId());
 
-                            for (QuestionPostModel model : questionPostArrayList){
-                                if (model.getId().equals(changedObject.getId())){
-                                    model.numberOfComments = changedObject.numberOfComments;
-                                }
-                            }
+                            newHelpModels.add(changedObject);
                         }
-                        adapter.updateHelpPostList(questionPostArrayList);
+                        adapter.updateHelpPostList(newHelpModels);
                     }
                 });
     }

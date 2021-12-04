@@ -145,7 +145,7 @@ public class SousVideRepository {
         //asynchronously retrieve multiple documents
         Task<QuerySnapshot> fetchTask =  firebaseUtils.getFlexPostsDocumentReference()
                 .collection("posts")
-                .orderBy("created", Query.Direction.ASCENDING)
+                .orderBy("created", Query.Direction.DESCENDING)
                 .limit(limit)
                 .get();
 
@@ -254,7 +254,7 @@ public class SousVideRepository {
         //asynchronously retrieve multiple documents
         Task<QuerySnapshot> fetchTask =  firebaseUtils.getHelpPostsDocumentReference()
                 .collection("posts")
-                .orderBy("created", Query.Direction.ASCENDING)
+                .orderBy("created", Query.Direction.DESCENDING)
                 .limit(limit)
                 .get();
 
