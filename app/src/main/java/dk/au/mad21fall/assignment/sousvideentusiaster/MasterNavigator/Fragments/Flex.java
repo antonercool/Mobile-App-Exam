@@ -13,21 +13,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.CommentModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.FlexPostModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.ListView.PostFlexAdapter;
 import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.INavigator;
@@ -37,7 +32,7 @@ import dk.au.mad21fall.assignment.sousvideentusiaster.Repository.SousVideReposit
 public class Flex extends Fragment implements PostFlexAdapter.IPostItemClickedListener {
 
     //How many items to generate
-    public static final int NUM_ITEMS = 10;
+    public static final int NUM_ITEMS = 20;
     private static final String TAG = "FLEX";
 
     //widgets
@@ -63,7 +58,7 @@ public class Flex extends Fragment implements PostFlexAdapter.IPostItemClickedLi
     }
 
     private void updateUi() {
-        sousVideRepository.fetchNewestFlex(10)
+        sousVideRepository.fetchNewestFlex(NUM_ITEMS)
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -105,7 +100,7 @@ public class Flex extends Fragment implements PostFlexAdapter.IPostItemClickedLi
         //set up recyclerview with adapter and layout manager
         adapter = new PostFlexAdapter(this);
         adapter.addContext(getContext());
-        rcvList = view.findViewById(R.id.recyclerView_help_fragment);
+        rcvList = view.findViewById(R.id.recyclerView_flex_fragment);
         rcvList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         ImageView postNewFlex = view.findViewById(R.id.flex_postBttn);
@@ -145,6 +140,6 @@ public class Flex extends Fragment implements PostFlexAdapter.IPostItemClickedLi
 
     @Override
     public void onPostClicked(String ID) {
-        ((INavigator)getActivity()).onDetailClicked(ID);
+        ((INavigator)getActivity()).onDetailFlexClicked(ID);
     }
 }

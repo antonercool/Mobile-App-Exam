@@ -35,7 +35,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/post_help_content_text"
+        android:id="@+id/post_flex_content_text"
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:layout_marginStart="8dp"
@@ -52,7 +52,7 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/post_help_title"
+        app:layout_constraintTop_toBottomOf="@+id/post_flex_title"
         tools:text="Text" />
 
     <View
@@ -69,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
 
     <Button
-        android:id="@+id/post_help_postBttn"
+        android:id="@+id/post_flex_postBttn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -82,7 +82,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/post_help_cancelBttn"
+        android:id="@+id/post_flex_cancelBttn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -94,7 +94,7 @@
         android:minWidth="0dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/post_help_postBttn" />
+        app:layout_constraintEnd_toStartOf="@+id/post_flex_postBttn" />
 
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/gridLayout"
@@ -107,7 +107,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/post_help_content_text">
+        app:layout_constraintTop_toBottomOf="@+id/post_flex_content_text">
 
         <Button
             android:id="@+id/post_flex_uploadBttn"
@@ -174,7 +174,7 @@
     </androidx.gridlayout.widget.GridLayout>
 
     <EditText
-        android:id="@+id/post_help_title"
+        android:id="@+id/post_flex_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -191,7 +191,7 @@
         app:layout_constraintTop_toBottomOf="@+id/radioButton2" />
 
     <EditText
-        android:id="@+id/post_help_meatCooked"
+        android:id="@+id/post_flex_meatCooked"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -217,7 +217,7 @@
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/post_help_meatCooked">
+        app:layout_constraintTop_toBottomOf="@+id/post_flex_meatCooked">
 
         <ImageView
             android:id="@+id/imageView2"

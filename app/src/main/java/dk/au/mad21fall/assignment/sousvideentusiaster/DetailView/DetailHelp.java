@@ -41,15 +41,15 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.CommentModel;
-import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.FlexPostModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.PictureModel;
+import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.QuestionPostModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.ListView.CommentAdapter;
 import dk.au.mad21fall.assignment.sousvideentusiaster.R;
 import dk.au.mad21fall.assignment.sousvideentusiaster.Repository.SousVideRepository;
 
-public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICommentItemClickedListener {
+public class DetailHelp extends AppCompatActivity implements CommentAdapter.ICommentItemClickedListener {
 
-    private static final String TAG = "DETAIL FLEX VIEW";
+    private static final String TAG = "DETAIL HELP VIEW";
     private ArrayList<CommentModel> commentArrayList = new ArrayList<>();
 
     public static final int NUM_COMMENTS = 1;
@@ -62,7 +62,7 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
     private String ID;
 
     EditText addComment;
-    TextView title, description, temperature, timeCoocked,
+    TextView title, description,
             numberOfComments, commentDate, commentUser, postedAtTime, postedUsername;
     ViewPager postedImage;
     Chip chip01, chip02;
@@ -74,7 +74,7 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details_flex);
+        setContentView(R.layout.activity_details_help);
         sousVideRepository = SousVideRepository.getSousVideRepositoryInstance();
 
         ID = getIntent().getStringExtra("ID"); //TODO VM
@@ -86,7 +86,7 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
         imageAdaptor = new ImageAdaptor(this);
 
 
-        sousVideRepository.subscribeToFlexComments(ID)
+        sousVideRepository.subscribeToHelpComments(ID)
                 .orderBy("created", Query.Direction.ASCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -110,7 +110,7 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
     }
 
     public void updateUI(String ID){
-        sousVideRepository.fetchFlexCommentsByPostID(ID).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        sousVideRepository.fetchHelpCommentsByPostID(ID).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isComplete()) {
@@ -126,33 +126,29 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
         });
 
 
-        sousVideRepository.fetchFlexPostByID(ID).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        sousVideRepository.fetchHelpPostByID(ID).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isComplete()){
-                    FlexPostModel flexPostModel = task.getResult().toObject(FlexPostModel.class);
-                    title.setText(flexPostModel.title);
-                    description.setText(flexPostModel.description);
+                    QuestionPostModel questionPostModel = task.getResult().toObject(QuestionPostModel.class);
+                    title.setText(questionPostModel.title);
+                    description.setText(questionPostModel.description);
 
                     // Load userprofile for comment section
                     FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                     Uri userPhotoUri = firebaseUser.getPhotoUrl();
                     Glide.with(getApplicationContext()).load(userPhotoUri).into(image_profile);
 
-                    chip01.setText(flexPostModel.labels.get(0));
-                    chip01.setText(flexPostModel.labels.get(0));
-                    timeCoocked.setText(Integer.toString(flexPostModel.hoursCooked) + " Hour(s).");
-                    temperature.setText(Integer.toString(flexPostModel.temp) + " Degrees.");
-                    title.setText(flexPostModel.title);
-                    postedUsername.setText(flexPostModel.owner);
-                    stars.setNumStars(flexPostModel.stars);
+                    chip01.setText(questionPostModel.labels.get(0));
+                    chip01.setText(questionPostModel.labels.get(0));
+                    postedUsername.setText(questionPostModel.owner);
 
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/hh:mm");
-                    postedAtTime.setText(simpleDateFormat.format(flexPostModel.created));
-                    numberOfComments.setText(Integer.toString(flexPostModel.numberOfComments) + " Comment(s).");
+                    postedAtTime.setText(simpleDateFormat.format(questionPostModel.created));
+                    numberOfComments.setText(Integer.toString(questionPostModel.numberOfComments) + " Comment(s).");
 
                     ArrayList<Bitmap> bitmaps = new ArrayList<>();
-                    for (PictureModel pictureModel: flexPostModel.pictures){
+                    for (PictureModel pictureModel: questionPostModel.pictures){
                         Glide.with(getApplicationContext())
                                 .asBitmap()
                                 .load(pictureModel.url)
@@ -165,7 +161,7 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
                                     @Override
                                     public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
                                         bitmaps.add(resource);
-                                        if (bitmaps.size() == flexPostModel.pictures.size())
+                                        if (bitmaps.size() == questionPostModel.pictures.size())
                                         {
                                             // request this on ui thread
                                             Runnable toMainUi = new Runnable() {
@@ -175,7 +171,7 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
                                                     postedImage.setAdapter(imageAdaptor);
                                                 }
                                             };
-                                            DetailFlex.this.runOnUiThread(toMainUi);
+                                            DetailHelp.this.runOnUiThread(toMainUi);
                                         }
                                         return false;
                                     }
@@ -188,37 +184,31 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
 
     public void setupUIElements(){
         adapter = new CommentAdapter(this);
-        rcvList = findViewById(R.id.flex_commentSection_recyclerView);
+        rcvList = findViewById(R.id.help_commentSection_recyclerView);
         rcvList.setLayoutManager(new LinearLayoutManager(this));
 
-        addComment = findViewById(R.id.add_comment);
-        image_profile = findViewById(R.id.image_profile);
-        cancel_cross = findViewById(R.id.cancel_cross);
-        title = findViewById(R.id.activity_details_flex_title);
-        description = findViewById(R.id.activity_details_flex_content);
-        postedImage = findViewById(R.id.activity_details_flex_image);
-        chip01 = findViewById(R.id.activity_details_flex_chip01);
-        chip02 = findViewById(R.id.activity_details_flex_chip02);
-        temperature = findViewById(R.id.activity_details_flex_temperature);
-        timeCoocked = findViewById(R.id.activity_details_flex_hoursCooked);
-        numberOfComments = findViewById(R.id.activity_details_flex_numberOfComments);
-        commentDate = findViewById(R.id.commentCreated);
-        commentUser = findViewById(R.id.username);
-        stars = findViewById(R.id.list_item_ratingbar2);
-        stars.setMax(5);
+        addComment = findViewById(R.id.add_comment_help);
+        image_profile = findViewById(R.id.profile_help_image);
+        cancel_cross = findViewById(R.id.cancel_cross_help);
+        title = findViewById(R.id.activity_details_help_title);
+        description = findViewById(R.id.activity_details_help_content);
+        postedImage = findViewById(R.id.activity_details_help_image);
+        chip01 = findViewById(R.id.activity_details_help_chip01);
+        chip02 = findViewById(R.id.activity_details_help_chip02);
+        numberOfComments = findViewById(R.id.activity_details_help_numberOfComments);
 
-        postedAtTime = findViewById(R.id.details_time);
-        postedUsername = findViewById(R.id.details_username);
+        postedAtTime = findViewById(R.id.details_time_help);
+        postedUsername = findViewById(R.id.details_username_help);
 
         adapter.addContext(getApplicationContext());
 
-        post = findViewById(R.id.post);
+        post = findViewById(R.id.post_help);
 
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(addComment.getText().toString().equals("")){
-                    Toast.makeText(DetailFlex.this, "You can't send and empty comment", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailHelp.this, "You can't send and empty comment", Toast.LENGTH_SHORT).show();
                 }else{
                     addComment();
                     addComment.setText("");
@@ -267,6 +257,6 @@ public class DetailFlex extends AppCompatActivity implements CommentAdapter.ICom
         numberOfComments.setText(String.valueOf(updatedNumberOfComment) + " " + commentElements[1]);
 
         // Update firestore and broadcast other view with update
-        sousVideRepository.postFlexComment(ID, commentModel);
+        sousVideRepository.postHelpComment(ID, commentModel);
     }
 }

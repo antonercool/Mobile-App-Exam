@@ -18,6 +18,9 @@
             android:name=".DetailView.DetailFlex"
             android:exported="true" />
         <activity
+            android:name=".DetailView.DetailHelp"
+            android:exported="true" />
+        <activity
             android:name=".PostFlex.PostFlex"
             android:exported="false" />
         <activity

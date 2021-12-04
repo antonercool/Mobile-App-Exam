@@ -1,0 +1,122 @@
+package dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models;
+
+import com.google.firebase.firestore.IgnoreExtraProperties;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+//simple data class (DTO)
+@IgnoreExtraProperties
+public class QuestionPostModel {
+
+    public String title;
+    public Date created;
+    public String description;
+    public ArrayList<String> labels;
+    public String owner;
+    public String url;
+    public int numberOfComments;
+    public String id;
+
+    public ArrayList<PictureModel> pictures;
+    public ArrayList<CommentModel> comments;
+
+
+    public QuestionPostModel(){};
+
+    public QuestionPostModel(Date created, String description, ArrayList<String> labels, String owner, String url, ArrayList<PictureModel> pictures, ArrayList<CommentModel> comments, int numberOfComments, String title) {
+        this.created = created;
+        this.description = description;
+        this.labels = labels;
+        this.owner = owner;
+        this.url = url;
+        this.pictures = pictures;
+        this.comments = comments;
+        this.numberOfComments = numberOfComments;
+        this.title = title;
+    }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public ArrayList<String> getLabels() {
+        return labels;
+    }
+
+    public void setLabels(ArrayList<String> labels) {
+        this.labels = labels;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public int getNumberOfComments() {
+        return numberOfComments;
+    }
+
+    public void setNumberOfComments(int numberOfComments) {
+        this.numberOfComments = numberOfComments;
+    }
+
+    public ArrayList<PictureModel> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(ArrayList<PictureModel> pictures) {
+        this.pictures = pictures;
+    }
+
+    public ArrayList<CommentModel> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<CommentModel> comments) {
+        this.comments = comments;
+    }
+}
+
+
+

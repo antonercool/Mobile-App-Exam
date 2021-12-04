@@ -7,5 +7,7 @@ public interface INavigator {
     void onHelpPostClicked();
     void onHelpPostCancelClicked();
 
-    void onDetailClicked(String ID);
+    void onDetailFlexClicked(String ID);
+    void onDetailHelpClicked(String ID);
+
 }

@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import dk.au.mad21fall.assignment.sousvideentusiaster.DetailView.DetailFlex;
+import dk.au.mad21fall.assignment.sousvideentusiaster.DetailView.DetailHelp;
+import dk.au.mad21fall.assignment.sousvideentusiaster.ListView.HelpPost;
 import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.Fragments.Flex;
 import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.Fragments.News;
 import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.Fragments.Profile;
@@ -107,10 +109,16 @@ public class MasterNavigatorActivity extends AppCompatActivity implements INavig
                 Question).commitNow();
     }
 
-    //TODO send ID of clicked item with itent
     @Override
-    public void onDetailClicked(String ID) {
+    public void onDetailFlexClicked(String ID) {
         Intent i = new Intent(this, DetailFlex.class);
+        i.putExtra("ID", ID);
+        startActivity(i);
+    }
+
+    @Override
+    public void onDetailHelpClicked(String ID) {
+        Intent i = new Intent(this, DetailHelp.class);
         i.putExtra("ID", ID);
         startActivity(i);
     }

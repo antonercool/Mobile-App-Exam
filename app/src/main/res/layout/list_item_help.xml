@@ -26,22 +26,22 @@
                 android:id="@+id/list_item_timePostedTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
                 android:text="TextView"
-                android:textSize="10sp"
-                app:layout_constraintStart_toEndOf="@+id/tis"
+                android:textSize="8sp"
+                app:layout_constraintStart_toEndOf="@+id/item_flex_profile"
                 app:layout_constraintTop_toBottomOf="@+id/list_item_usernameTxt"
                 tools:text="43 minutes ago." />
 
             <TextView
                 android:id="@+id/list_item_usernameTxt"
-                android:layout_width="130dp"
+                android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="6dp"
                 android:text="TextView"
-                android:textSize="12sp"
-                app:layout_constraintStart_toEndOf="@+id/tis"
+                android:textSize="10sp"
+                app:layout_constraintStart_toEndOf="@+id/item_flex_profile"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Mathias Jacobsen" />
 
@@ -49,91 +49,116 @@
                 android:id="@+id/list_item_chip01"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_marginBottom="108dp"
+                android:enabled="false"
                 android:scaleX="0.7"
                 android:scaleY="0.7"
+                android:textColor="@color/GRAYER"
                 android:textSize="12sp"
-                app:layout_constraintStart_toEndOf="@+id/list_item_usernameTxt"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 tools:text="Mørbrad" />
 
             <EditText
                 android:id="@+id/list_item_userTextTxt"
                 android:layout_width="0dp"
-                android:layout_height="90dp"
+                android:layout_height="110dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="30dp"
+                android:clickable="false"
                 android:ems="10"
+                android:enabled="false"
                 android:gravity="start|top"
                 android:includeFontPadding="false"
                 android:inputType="textMultiLine"
+                android:paddingTop="16dp"
+                android:textColor="@color/GRAYER"
                 android:textSize="10sp"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.258"
                 app:layout_constraintStart_toEndOf="@+id/list_item_image"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/list_item_chip02"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="64dp"
+                android:layout_marginStart="26dp"
+                android:layout_marginBottom="108dp"
+                android:enabled="false"
                 android:scaleX="0.7"
                 android:scaleY="0.7"
+                android:textColor="@color/GRAYER"
                 android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/list_item_usernameTxt"
-                app:layout_constraintTop_toTopOf="parent"
                 tools:text="Bearnaise" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/list_item_help_chipStatus"
+                android:id="@+id/list_item_chip03"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="90dp"
-                android:layout_marginTop="108dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="75dp"
+                android:backgroundTint="#FFCDD2"
+                android:enabled="false"
                 android:scaleX="0.7"
                 android:scaleY="0.7"
+                android:text="Help"
+                android:textColor="@color/GRAYER"
                 android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:rippleColor="#E3E3E3"
+                app:layout_constraintStart_toEndOf="@+id/list_item_image"
+                app:layout_constraintTop_toBottomOf="@+id/list_item_chip01"
                 tools:text="Help" />
 
             <ImageView
                 android:id="@+id/list_item_image"
                 android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="260dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tis"
+                android:layout_marginBottom="8dp"
+                android:foregroundTint="#DFDEDE"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_flex_profile"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <TextView
                 android:id="@+id/list_item_commentsTxt"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="87dp"
                 android:text="TextView"
-                android:textSize="10sp"
-                app:layout_constraintStart_toEndOf="@+id/list_item_help_chipStatus"
-                app:layout_constraintTop_toBottomOf="@+id/list_item_userTextTxt"
+                android:textSize="9dp"
+                app:layout_constraintStart_toEndOf="@+id/imageView6"
+                app:layout_constraintTop_toBottomOf="@+id/list_item_chip01"
                 tools:text="23 comments" />
 
-            <ImageView
-                android:id="@+id/tis"
-                android:layout_width="31dp"
-                android:layout_height="31dp"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/item_flex_profile"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@mipmap/user_icon"
-                tools:srcCompat="@mipmap/user_icon" />
+                app:srcCompat="@mipmap/user_icon" />
 
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="88dp"
+                app:layout_constraintStart_toEndOf="@+id/list_item_chip03"
+                app:layout_constraintTop_toBottomOf="@+id/list_item_chip01"
+                app:srcCompat="@drawable/ic_comment_alt_solid" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

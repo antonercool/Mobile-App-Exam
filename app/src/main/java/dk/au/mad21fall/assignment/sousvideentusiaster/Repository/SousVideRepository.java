@@ -38,6 +38,7 @@ import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.FirebaseUtils;
 import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.CommentModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.FlexPostModel;
 import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.PictureModel;
+import dk.au.mad21fall.assignment.sousvideentusiaster.Firestore.Models.QuestionPostModel;
 
 public class SousVideRepository {
 
@@ -120,7 +121,7 @@ public class SousVideRepository {
         return urlTask;
     }
 
-    public CollectionReference subscribeToComments(String ID){
+    public CollectionReference subscribeToFlexComments(String ID){
         return firebaseUtils.getFlexPostsDocumentReference()
                 .collection("posts")
                 .document(ID)
@@ -138,19 +139,6 @@ public class SousVideRepository {
                 .collection("posts");
     }
 
-
-    public Task<QuerySnapshot> getNewestBatchFromTime(Date fromTime, int limit) {
-
-        //asynchronously retrieve multiple documents
-        Task<QuerySnapshot> fetchTask =  firebaseUtils.getFlexPostsDocumentReference()
-                .collection("posts")
-                .whereLessThan("created", fromTime)
-                .orderBy("created", Query.Direction.ASCENDING)
-                .limit(limit)
-                .get();
-
-        return fetchTask;
-    }
 
     public Task<QuerySnapshot> fetchNewestFlex(int limit) {
 
@@ -174,7 +162,7 @@ public class SousVideRepository {
         return fetchTask;
     }
 
-    public Task<QuerySnapshot> fetchCommentsByPostID(String ID) {
+    public Task<QuerySnapshot> fetchFlexCommentsByPostID(String ID) {
 
         //asynchronously retrieve multiple documents
         Task<QuerySnapshot> fetchTask =  firebaseUtils.getFlexPostsDocumentReference()
@@ -186,7 +174,8 @@ public class SousVideRepository {
         return fetchTask;
     }
 
-    public Task<DocumentReference> postComment(String postID, CommentModel commentModel) {
+
+    public Task<DocumentReference> postFlexComment(String postID, CommentModel commentModel) {
 
         //asynchronously retrieve multiple documents
         Task<DocumentReference> commentUploadTask =  firebaseUtils.getFlexPostsDocumentReference()
@@ -228,6 +217,102 @@ public class SousVideRepository {
 
         return flexPost;
     }
+
+    public void postNewQuestionPostAsync(QuestionPostModel newPost, String[] paths, int numOfImages, Activity activity) {
+        ArrayList<Uri> imageUrls = new ArrayList<>();
+        for (int i = 0; i < numOfImages; i++) {
+            uploadImageAsync(paths[i]).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        imageUrls.add(downloadUri);
+                        newPost.pictures.add(new PictureModel(downloadUri.toString()));
+
+                        if (imageUrls.size() == numOfImages) {
+
+                            firebaseUtils.getHelpPostsDocumentReference()
+                                    .collection("posts")
+                                    .add(newPost)
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                        @Override
+                                        public void onSuccess(DocumentReference documentReference) {
+                                            Toast.makeText(activity, "Post uploaded", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
+                    } else {
+                        Log.e(TAG, "Failed to add new question post: ");
+                    }
+                }
+            });
+        }
+    }
+
+    public Task<QuerySnapshot> fetchNewestHelp(int limit) {
+
+        //asynchronously retrieve multiple documents
+        Task<QuerySnapshot> fetchTask =  firebaseUtils.getHelpPostsDocumentReference()
+                .collection("posts")
+                .orderBy("created", Query.Direction.ASCENDING)
+                .limit(limit)
+                .get();
+
+        return fetchTask;
+    }
+
+    public Task<DocumentSnapshot> fetchHelpPostByID(String ID) {
+
+        //asynchronously retrieve multiple documents
+        Task<DocumentSnapshot> fetchTask =  firebaseUtils.getHelpPostsDocumentReference()
+                .collection("posts")
+                .document(ID).get();
+
+        return fetchTask;
+    }
+
+    public CollectionReference subscribeToHelpPosts(){
+        return firebaseUtils.getHelpPostsDocumentReference()
+                .collection("posts");
+    }
+
+
+    public CollectionReference subscribeToHelpComments(String ID){
+        return firebaseUtils.getHelpPostsDocumentReference()
+                .collection("posts")
+                .document(ID)
+                .collection("comments");
+    }
+
+    public Task<QuerySnapshot> fetchHelpCommentsByPostID(String ID) {
+
+        //asynchronously retrieve multiple documents
+        Task<QuerySnapshot> fetchTask =  firebaseUtils.getHelpPostsDocumentReference()
+                .collection("posts")
+                .document(ID)
+                .collection("comments")
+                .get();
+
+        return fetchTask;
+    }
+
+    public Task<DocumentReference> postHelpComment(String postID, CommentModel commentModel) {
+
+        //asynchronously retrieve multiple documents
+        Task<DocumentReference> commentUploadTask =  firebaseUtils.getHelpPostsDocumentReference()
+                .collection("posts")
+                .document(postID)
+                .collection("comments")
+                .add(commentModel);
+
+        firebaseUtils.getHelpPostsDocumentReference()
+                .collection("posts")
+                .document(postID)
+                .update("numberOfComments", FieldValue.increment(1));
+
+        return commentUploadTask;
+    }
+
 
 
 }

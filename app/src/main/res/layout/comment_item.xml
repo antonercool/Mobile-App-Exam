@@ -48,6 +48,7 @@
             android:id="@+id/comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/gray_background_border"
             android:maxLines="5"
             android:textSize="10dp"></TextView>
 

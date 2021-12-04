@@ -7,26 +7,19 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -192,13 +185,13 @@ public class PostFlex extends Fragment {
 
     public void InitUIElements(View view) {
 
-        postBttn = view.findViewById(R.id.post_help_postBttn);
-        cancelBttn = view.findViewById(R.id.post_help_cancelBttn);
+        postBttn = view.findViewById(R.id.post_flex_postBttn);
+        cancelBttn = view.findViewById(R.id.post_flex_cancelBttn);
         uploadBttn = view.findViewById(R.id.post_flex_uploadBttn);
 
-        title = view.findViewById(R.id.post_help_title);
-        content = view.findViewById(R.id.post_help_content_text);
-        coockedMeat = view.findViewById(R.id.post_help_meatCooked);
+        title = view.findViewById(R.id.post_flex_title);
+        content = view.findViewById(R.id.post_flex_content_text);
+        coockedMeat = view.findViewById(R.id.post_flex_meatCooked);
         temperature = view.findViewById(R.id.post_flex_temperature);
         time = view.findViewById(R.id.post_flex_time);
         uploadCounter = view.findViewById(R.id.post_flex_imageUploadCounter);
