@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -21,6 +23,7 @@ import dk.au.mad21fall.assignment.sousvideentusiaster.MasterNavigator.Fragments.
 import dk.au.mad21fall.assignment.sousvideentusiaster.Post.PostFlex;
 import dk.au.mad21fall.assignment.sousvideentusiaster.Post.PostHelp;
 import dk.au.mad21fall.assignment.sousvideentusiaster.R;
+import dk.au.mad21fall.assignment.sousvideentusiaster.Services.MrBeefService;
 
 public class MasterNavigatorActivity extends AppCompatActivity implements INavigator {
 
@@ -42,6 +45,22 @@ public class MasterNavigatorActivity extends AppCompatActivity implements INavig
         setUpUiElements();
         View v = menuNavigator.findViewById(R.id.flex_item);
         v.performClick();
+
+        if (!isMyServiceRunning(MrBeefService.class)){
+            startService(new Intent(this, MrBeefService.class));
+        }
+
+    }
+
+    //https://stackoverflow.com/questions/600207/how-to-check-if-a-service-is-running-on-android
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void setUpUiElements(){
