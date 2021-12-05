@@ -50,6 +50,7 @@ public class PostFlex extends Fragment {
         View view = inflater.inflate(R.layout.post_flex_fragment, container, false);
         InitUIElements(view);
 
+
         postFlexViewModel = new ViewModelProvider(this).get(PostFlexViewModel.class);
         postFlexViewModel.init();
 

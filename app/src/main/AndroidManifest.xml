@@ -31,7 +31,9 @@
         </activity>
         <activity
             android:name=".MasterNavigator.MasterNavigatorActivity"
-            android:exported="true" >
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan"
+            >
         </activity>
         <service android:name=".Services.MrBeefService"></service>
     </application>
