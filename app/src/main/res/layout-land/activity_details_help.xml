@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_details_help"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/activity_details_help_chip01"
+        android:layout_width="80dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="56dp"
+        android:enabled="false"
+        android:textAlignment="center"
+        android:textColor="@color/GRAYER"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Mørbrad" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/activity_details_help_chip02"
+        android:layout_width="80dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="56dp"
+        android:enabled="false"
+        android:text="Ripeye"
+        android:textAlignment="center"
+        android:textColor="@color/GRAYER"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/activity_details_help_chip01"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Ripeye" />
+
+    <TextView
+        android:id="@+id/activity_details_help_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="TextView"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/details_time_help"
+        tools:text="Se denne lækre steg!" />
+
+    <TextView
+        android:id="@+id/details_username_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Lasse M." />
+
+    <TextView
+        android:id="@+id/details_time_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/details_username_help"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="1H 15 minutes ago." />
+
+    <EditText
+        android:id="@+id/activity_details_help_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@android:color/transparent"
+        android:clickable="false"
+        android:editable="false"
+        android:ems="10"
+        android:enabled="false"
+        android:gravity="start|top"
+        android:includeFontPadding="false"
+        android:inputType="textMultiLine"
+        android:lineSpacingExtra="0dp"
+        android:maxHeight="80dp"
+        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled"
+        android:textColor="@color/GRAYER"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_details_help_chip02" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/activity_details_help_image"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/image_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_details_help_content" />
+
+    <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/gridLayout2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_details_help_image">
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            app:layout_column="0"
+            app:layout_row="0"
+            app:srcCompat="@drawable/ic_comment_alt_solid" />
+
+        <TextView
+            android:id="@+id/activity_details_help_numberOfComments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="3dp"
+            android:text="3 Commnets."
+            android:textSize="9sp"
+            app:layout_column="1"
+            app:layout_row="0"
+            tools:text="3 Commnets." />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp"
+            app:layout_column="2"
+            app:layout_row="0" />
+
+    </androidx.gridlayout.widget.GridLayout>
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout2" />
+
+    <ImageView
+        android:id="@+id/cancel_cross_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
+        app:tint="#D50000" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/help_commentSection_recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider3"
+        tools:itemCount="3"
+        tools:listitem="@layout/comment_item">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <RelativeLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:padding="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/help_commentSection_recyclerView">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_help_image"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@mipmap/user_icon"></de.hdodenhof.circleimageview.CircleImageView>
+
+        <EditText
+            android:id="@+id/add_comment_help"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toRightOf="@id/profile_help_image"
+            android:background="@android:color/transparent"
+            android:hint="Add a comment..."
+            android:textSize="12sp"></EditText>
+
+        <TextView
+            android:id="@+id/post_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
+            android:text="POST"
+            android:textColor="@color/design_default_color_primary"></TextView>
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

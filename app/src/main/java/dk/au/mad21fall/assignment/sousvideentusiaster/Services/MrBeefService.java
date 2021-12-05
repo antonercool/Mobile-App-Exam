@@ -25,7 +25,7 @@ import dk.au.mad21fall.assignment.sousvideentusiaster.R;
 public class MrBeefService extends Service {
 
     private static final int NOTIFICATION_ID = 238;
-    private static final String CHANNEL = "movieService";
+    private static final String CHANNEL = "beefService";
     private ExecutorService backgroundExecutor;
 
 
@@ -44,7 +44,7 @@ public class MrBeefService extends Service {
         Notification notification = new NotificationCompat.Builder(this, CHANNEL)
                 .setContentTitle("MrBeef suggestor")
                 .setContentText("MrBeef is an online beef seller")
-                .setSmallIcon(R.mipmap.food_icon)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .build();
 
         // promote as foreground
@@ -61,8 +61,8 @@ public class MrBeefService extends Service {
             public void run() {
                 try {
                     while(true) {
-                        // every 10 sec
-                        Thread.sleep(1000 * 10);
+                        // every 60 sec
+                        Thread.sleep(1000 * 60);
 
                         Handler handler = new Handler(Looper.getMainLooper());
                         handler.post(new Runnable() {

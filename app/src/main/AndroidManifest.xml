@@ -3,6 +3,9 @@
     package="dk.au.mad21fall.assignment.sousvideentusiaster" >
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/food_icon"
@@ -12,17 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SousVideEntusiaster" >
         <activity
-            android:name=".Post.PostFlex"
-            android:exported="false" />
-        <activity
             android:name=".DetailView.DetailFlex"
             android:exported="true" />
         <activity
             android:name=".DetailView.DetailHelp"
             android:exported="true" />
-        <activity
-            android:name=".PostFlex.PostFlex"
-            android:exported="false" />
         <activity
             android:name=".Login.LoginActivity"
             android:exported="true" >
@@ -36,10 +33,7 @@
             android:name=".MasterNavigator.MasterNavigatorActivity"
             android:exported="true" >
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true" >
-        </activity>
+        <service android:name=".Services.MrBeefService"></service>
     </application>
 
 </manifest>

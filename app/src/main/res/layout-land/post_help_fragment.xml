@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/post_help_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RadioButton
+        android:id="@+id/radioButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:checked="true"
+        android:clickable="false"
+        android:text="Help"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioButton
+        android:id="@+id/radioButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:checked="false"
+        android:clickable="false"
+        android:text="Show and tell"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/radioButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/post_help_content_text"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_corner"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Text"
+        android:inputType="textMultiLine"
+        android:padding="5dp"
+        android:textAllCaps="false"
+        android:textColor="?android:attr/textColorSecondary"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/post_help_title"
+        tools:text="Text" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+
+    <Button
+        android:id="@+id/post_help_postBttn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:text="Post"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/post_help_meatCooked" />
+
+    <Button
+        android:id="@+id/post_help_cancelBttn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:text="Cancel"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/post_help_postBttn"
+        app:layout_constraintTop_toBottomOf="@+id/post_help_meatCooked" />
+
+    <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_corner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/post_help_content_text">
+
+        <Button
+            android:id="@+id/post_help_uploadBttn"
+            android:layout_width="62dp"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:scaleX="0.50"
+            android:scaleY="0.50"
+            android:textAlignment="textStart"
+            app:icon="@android:drawable/ic_menu_upload"
+            app:layout_column="7"
+            app:layout_row="0"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/post_help_imageUploadCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0/5"
+            app:layout_column="6"
+            app:layout_row="0" />
+
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/post_help_image01"
+            android:layout_width="43dp"
+            android:layout_height="53dp"
+            app:layout_column="0"
+            app:layout_row="0"
+            app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/post_help_image02"
+            android:layout_width="43dp"
+            android:layout_height="53dp"
+            app:layout_column="1"
+            app:layout_row="0"
+            app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/post_help_image03"
+            android:layout_width="43dp"
+            android:layout_height="53dp"
+            app:layout_column="2"
+            app:layout_row="0"
+            app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/post_help_image04"
+            android:layout_width="43dp"
+            android:layout_height="53dp"
+            app:layout_column="3"
+            app:layout_row="0"
+            app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/post_help_image05"
+            android:layout_width="43dp"
+            android:layout_height="53dp"
+            app:layout_column="4"
+            app:layout_row="0"
+            app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+    </androidx.gridlayout.widget.GridLayout>
+
+    <EditText
+        android:id="@+id/post_help_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_corner"
+        android:ems="10"
+        android:hint="Title"
+        android:inputType="textPersonName"
+        android:padding="5dp"
+        android:textColor="?android:attr/textColorSecondary"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioButton2" />
+
+    <EditText
+        android:id="@+id/post_help_meatCooked"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_corner"
+        android:ems="10"
+        android:hint="Your cooked meat"
+        android:inputType="textPersonName"
+        android:padding="5dp"
+        android:textColor="?android:attr/textColorSecondary"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout></ScrollView>
